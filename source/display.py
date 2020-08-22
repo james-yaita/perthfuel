@@ -198,15 +198,14 @@ def formatted_html_table(filtered_data, cols):
   The HTML table text
 
 
-  """
+    """
 
     thead = '<table>\n'
     tbody = '<tbody id="info">\n'
 
     row_data = ["<thead>\n<tr>"]
     for col in cols:
-
-        element_root =col['element_root']
+        element_root = col['element_root']
         col_title = col['col_title']
         th_content = f"""
         <th id=\"{element_root}\">{col_title}</th>"""
@@ -237,20 +236,21 @@ def formatted_html_table(filtered_data, cols):
 
 
 def html_head(title="Fuel Watch"):
+
     '''
-  Returns the output for the HEAD section of a HTML page
+    Returns the output for the HEAD section of a HTML page
 
 
-  Parameters
-  ----------
+    Parameters
+    ----------
 
-  title: String, default Fuel Watch.
-          Text for the HTML title tag
+    title: String, default Fuel Watch.
+            Text for the HTML title tag
 
-  Returns
-  -------
+    Returns
+    -------
 
-  String for the Head element plus opening doctype element
+    String for the Head element plus opening doctype element
 
     '''
     head = f'''<!DOCTYPE html>
@@ -260,7 +260,7 @@ def html_head(title="Fuel Watch"):
 <title>{title}</title>
 <link rel="stylesheet" href="static/style/desktop.css">
 </head>
-'''
+    '''
     return head
 
 
@@ -300,8 +300,8 @@ def display_form():
     product_dropdown = create_dropdown(data_list=product.products,
                                        data_option_value_key=product.item_id,
                                        date_option_name_key=product.item_name,
-                                       html_name="fuel_type",
-                                       html_id="fuel_type")
+                                       html_name="product",
+                                       html_id="product")
     brand_dropdown = create_dropdown(data_list=brand.brands,
                                      data_option_value_key=brand.item_id,
                                      date_option_name_key=brand.item_name,
@@ -309,7 +309,7 @@ def display_form():
                                      html_id="brand")
 
     surrounding_suburbs_input = f'''
-    <input type="checkbox" id="surround" name="surround"
+    <input type="checkbox" id="surrounding" name="surrounding"
      value="surronding" checked="checked">
     '''
 
@@ -321,7 +321,7 @@ def display_form():
 
     <form method="POST" action="/results.html">
     <label for="suburb">Suburb:</label> {suburb_combo}
-    <label for="fuel_type">Fuel Type:</label> {product_dropdown}
+    <label for="product">Fuel Type:</label> {product_dropdown}
     <label for="brand">Brand:</label> {brand_dropdown}
     <label for="surround">Include Surrounding Suburbs:</label> {surrounding_suburbs_input}
 

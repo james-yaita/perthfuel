@@ -208,8 +208,45 @@ def hello_world():
 def display_result():
     page_content = ""
     fuel_type = {"id": 1, "name": "Unleaded Petrol"}
+
+    expected_inputs = [
+        {
+            "name": "suburb",
+            "default": "",
+            "required": True,
+            "supplied_value": None
+        }, {
+            "name": "brand",
+            "default": None,
+            "required": False,
+            "supplied_value": None
+        }, {
+            "name": "product",
+            "default": None,
+            "required": False,
+            "supplied_value": None
+        }, {
+            "name": "surrounding",
+            "default": None,
+            "required": False,
+            "supplied_value": None
+        }
+
+    ]
+
+    for item in expected_inputs:
+        if item["name"] in request.form:
+            print(item["name"], " has value of ", request.form[item["name"]])
+        else:
+            print(item["name"], " not supplied")
+
+
     requested_suburb = request.form["suburb"]
-    print("request thing is ", request.form["suburb"])
+
+    # what happens for suburb with no petrol station
+    # are all there - eg city beach
+
+
     valid_suburb = suburb_info.is_valid_suburb(requested_suburb)
 
     # Assuming errors
