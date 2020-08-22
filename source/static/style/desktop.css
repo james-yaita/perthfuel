@@ -1,0 +1,161 @@
+/*
+
+Simplistic attempt at a design system
+More comprehensive options are:
+  https://designsystem.gov.au/components/core/
+  https://sass-lang.com
+
+*/
+:root {
+    /* Colour Scheme*/
+
+    --dark-font: #2A0036;
+    --light-font: white;
+
+    --link-standard: #200030;
+    --visited-standard: #200030;
+    --hover-standard: #8e5572;
+    --active-standard: #Be85A2;
+
+    --primary-backgrd-colour: #443850;
+    --primary-backgrd-colour-tint: #8870A0;
+    --primary-font: #A0EF64;
+    --primary-contrast-font: white;
+    --primary-shadow: #608060;
+
+    --secondary-backgrd-colour: #E6E0DC;
+    --secondary-font: #200030;
+    --secondary-shadow: #A9A9A9;
+
+    --tertiary-backgrd-colour: #F2F7F2;
+    --tertiary-font: #202020;
+
+    --quaternary-backgrd-colour: #F4F7FA;
+    --quaternary-font: #333333;
+
+    --candy-stripe-odd-backgrd-colour: #E6E5E0;
+    --candy-stripe-odd-font: var(--dark-font);
+    --candy-stripe-even-backgrd-colour: #E0E0EA;
+    --candy-stripe-even-font: var(--dark-font);
+    --candy-stripe-seperator: white;
+}
+
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: var(--secondary-backgrd-colour);
+    color: var(--secondary-font);
+    font-family: tahoma, verdana, sans-serif;
+    height: 100%;
+}
+
+a,
+a:visited {
+    color: var(--link-standard);
+}
+
+a:hover {
+    color: var(--hover-standard);
+}
+
+a:active {
+    color: var(--active-standard);
+}
+
+div.breadcrumbs {
+    background-color: var(--secondary-backgrd-colour);
+    color: var(--secondary-font);
+    padding: .2REM 1REM .5REM 1REM;
+
+    border-bottom: solid 2px var(--secondary-shadow);
+
+}
+
+h1 {
+    margin: 0;
+    padding: 1REM;
+    background-image: linear-gradient( to top, var(--primary-backgrd-colour) ,
+        var(--primary-backgrd-colour-tint));
+    color: var(--primary-font);
+    border-bottom: solid 5px var(--primary-shadow);
+}
+h2 {
+    margin:0;
+}
+
+
+div.main {
+    background-color: var(--quaternary-backgrd-colour);
+    color: var(--quaternary-font);
+    margin: 0;
+    padding: 0;
+}
+
+div.content {
+    background-color: var(--quaternary-backgrd-colour);
+    color: var(--quaternary-font);
+    margin: 0;
+    padding: 2REM;
+}
+
+form {
+    margin-bottom: 2REM;
+}
+
+table {
+    border: solid 1px var(--quaternary-font);
+    border-radius: 5px;
+    padding: 0;
+    border-spacing: 0;
+}
+
+thead,
+tbody {
+    margin: 0;
+    padding: 0;
+}
+
+
+td {
+    padding: 0.4REM;
+    border-bottom: solid 1px var(--candy-stripe-seperator);
+}
+
+th {
+    text-align: left;
+    background-color: var(--primary-backgrd-colour);
+    color: var(--primary-contrast-font);
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+tr:nth-child(odd) {
+    background-color: var(--candy-stripe-odd-backgrd-colour);
+    color: var(--candy-stripe-odd-font);
+}
+
+tr:nth-child(even) {
+    background-color: var(--candy-stripe-even-backgrd-colour);
+    color: var(--candy-stripe-even-font);
+}
+
+
+div.tail {
+    background-color: var(--secondary-backgrd-colour);
+    color: var(--secondary-font);
+    margin:0;
+    padding: 1REM 1REM 3REM 1REM;
+    text-align: center;
+    height: 80%;
+
+}
+
+#footer {
+    margin:0;
+    padding: .2REM 1REM .5REM 2REM;
+    background-color: var(--main-background);
+    color: var(--dark-font);
+}
+
