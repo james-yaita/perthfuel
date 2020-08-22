@@ -31,6 +31,7 @@ More comprehensive options are:
     --tertiary-font: #202020;
 
     --quaternary-backgrd-colour: #F4F7FA;
+    --quaternary-backgrd-tint-colour: #FAFCFF;
     --quaternary-font: #333333;
 
     --candy-stripe-odd-backgrd-colour: #E6E5E0;
@@ -100,7 +101,14 @@ div.content {
 }
 
 form {
+    background-color: var(quaternary-backgrd-tint-colour);
+    margin-top:1REM;
     margin-bottom: 2REM;
+}
+input, select {
+    font-size:1.3REM;
+    background-color: var(--quaternary-backgrd-colour);
+    color: var(--quaternary-font);
 }
 
 table {

@@ -1,6 +1,6 @@
 # Suburbs
 
-suburb_list = [
+suburbs= [
     "ALBANY",
     "ALEXANDER HEIGHTS",
     "ALFRED COVE",
@@ -311,22 +311,8 @@ suburb_list = [
 
 def is_valid_suburb(supplied_value):
     if supplied_value.casefold() in \
-        (supplied_value.casefold()  for place in suburb_list):
+        (supplied_value.casefold()  for place in suburbs):
         return True
     else:
         return False
 
-
-def suburb_combo_box():
-    '''
-    Produce a drop down but editable text
-    '''
-    html_text = '''
-    <input type="text" list="suburbs" name="suburb">
-    <datalist id="suburbs">'''
-
-    for suburb in suburb_list:
-        html_text += f"<option>{suburb}</option>\n"
-
-    html_text += "</datalist>"
-    return html_text
