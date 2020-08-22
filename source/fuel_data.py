@@ -1,6 +1,6 @@
 import requests
 import feedparser
-import pprint
+
 # Fuel Data
 '''
 

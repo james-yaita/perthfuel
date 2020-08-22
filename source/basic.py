@@ -204,7 +204,7 @@ def hello_world():
 
 
 
-@app.route('/results.html', methods=["GET", "POST"])
+@app.route('/results.html', methods=["POST"])
 def display_result():
     page_content = ""
     fuel_type = {"id": 1, "name": "Unleaded Petrol"}
@@ -234,20 +234,18 @@ def display_result():
 
     ]
 
+    requested_suburb = ""
+
     for item in expected_inputs:
         if item["name"] in request.form:
             print(item["name"], " has value of ", request.form[item["name"]])
+            item["supplied_value"] = request.form[item["name"]]
         else:
             print(item["name"], " not supplied")
 
+    if expected_inputs[0]["supplied_value"] is not None:
+        requested_suburb = expected_inputs[0]["supplied_value"]
 
-    requested_suburb = request.form["suburb"]
-
-    # what happens for suburb with no petrol station
-    # are all there - eg city beach
-
-
-    valid_suburb = suburb_info.is_valid_suburb(requested_suburb)
 
     # Assuming errors
     body_content = f"""<h2>Problem Encountered</h2>
@@ -261,11 +259,11 @@ def display_result():
     page_heading = "Fuel Prices"
     breadcrumbs = "Search Results"
     js_params = None
-    if valid_suburb is True:
-        body_content, js_params = get_suburb_content(requested_suburb)
-        title = f"{requested_suburb.title()} Fuel Price"
-        page_heading = "Fuel Prices"
-        breadcrumbs = f"{requested_suburb.title()} Search Results"
+
+    body_content, js_params = get_suburb_content(requested_suburb)
+    title = f"{requested_suburb.title()} Fuel Price"
+    page_heading = "Fuel Prices"
+    breadcrumbs = f"{requested_suburb.title()} Search Results"
 
     page_content = display.html_head(title)
     page_content += display.html_body_masthead(page_heading, breadcrumbs)
@@ -279,26 +277,14 @@ def display_result():
     page_content += DIV_CLOSE
     page_content += DIV_CLOSE
     page_content += display.html_body_footer()
-    print(js_params)
+    # print(js_params)
     page_content += display.html_tail(js_params)
 
     return page_content
 
 
-@app.route('/second.html')
-def second_page():
-    my_message = "Hello Flask.  second page"
-    return my_message
-
-
-@app.route('/user/<username>')
-def show_user_profile(username):
-    # show the user profile for that user
-    return 'User %s' % escape(username)
-
-
 @app.route('/region')
-def dislay_region():
+def display_region():
     # ?id=<string:region_id>&name=<string:region_desc>
     region_id = request.args.get('id')
     region_desc = request.args.get('name')
@@ -349,12 +335,12 @@ def get_sorted_data(get_data_function,
                     extraction_mapping,
                     days):
     stations = {}
-    print("In get_sorted_data ", parameters, " \n\n")
+    # print("In get_sorted_data ", parameters, " \n\n")
     for day in days:
         # Creating a new key for price based on the day
 
         filtered_data = get_data_function(**parameters, day=day)
-        print("\nfiltered data for  ", day, "\n", filtered_data, "\n")
+        # print("\nfiltered data for  ", day, "\n", filtered_data, "\n")
 
         price_day = "price_" + day
 
@@ -375,7 +361,7 @@ def get_region_content(region_id, days=['yesterday', 'today', 'tomorrow']):
 
     extraction_mapping, items_to_display = get_instructions()
 
-    print("\n\n")
+    # print("\n\n")
     sorted_data = get_sorted_data(fd.get_fuel_by_region,
                                   {"region": region_id},
                                   extraction_mapping,
