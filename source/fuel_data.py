@@ -159,7 +159,7 @@ def add_to_dictionary(stations, fuel_watch_data, primary_key, mapping_keys):
     return None
 
 
-def __get_fuel(zone_info, product_id=None, day=None, brand=None):
+def __get_fuel(zone_info, product=None, day=None, brand=None, surrounding="no"):
     '''
 
     Gets the information from the Fuel Watch Website based on the
@@ -182,9 +182,10 @@ def __get_fuel(zone_info, product_id=None, day=None, brand=None):
    
     # Create the request URL
     feed_url = __fuel_watch_rss_feed__ + zone_info
-    feed_url += get_field_value_product(product_id)
+    feed_url += get_field_value_product(product)
     feed_url += get_field_value_brand(brand)
     feed_url += get_field_value_day(day)
+    feed_url += get_field_value_surrounding(surrounding)
 
     if __debugging__:
         print(f"Request URL: {feed_url}")
@@ -211,7 +212,8 @@ def get_field_value_brand(brand=None):
         String of key value pair for URL query. Or empty sting for None
     '''
 
-    if brand == None:
+    if brand == None or brand == 0 or brand =='0':
+        print("removed brand of ", type(brand) )
         return ''
     else:
         return '&Brand=' + str(brand)
@@ -275,7 +277,7 @@ def get_field_value_surrounding(surrounding=None):
     -------
         String of key value pair for URL query. Or empty sting for None
     '''
-    if surrounding == False:
+    if surrounding == False or surrounding == "no":
         return '&Surrounding=no'
     elif surrounding == True:
         return '&Surrounding=yes'
@@ -284,7 +286,7 @@ def get_field_value_surrounding(surrounding=None):
 
 
 
-def get_fuel_by_suburb(suburb, product_id=None, day=None, surrounding=None, brand=None):
+def get_fuel_by_suburb(suburb, product=None, day=None, surrounding=None, brand=None):
     '''
     Request information for a suburb.  Other parameters can optionally
     supplied
@@ -305,11 +307,11 @@ def get_fuel_by_suburb(suburb, product_id=None, day=None, surrounding=None, bran
  
     suburb = suburb.replace(' ', '%20')
     zone = 'Suburb=' + str(suburb) + get_field_value_surrounding(surrounding)
-    return __get_fuel(zone, product_id = product_id, day = day, brand = brand)
+    return __get_fuel(zone, product = product, day = day, brand = brand)
 
 
 
-def get_fuel_by_region(region, product_id=None, day=None, brand=None):
+def get_fuel_by_region(region, product=None, day=None, brand=None):
     '''
     Request information for a region.  Other parameters can optionally
     supplied
@@ -329,11 +331,11 @@ def get_fuel_by_region(region, product_id=None, day=None, brand=None):
     Data from the Fuel Watch website
     '''
     zone = 'Region=' + str(region)
-    return __get_fuel(zone, product_id=product_id, day=day, brand=brand)
+    return __get_fuel(zone, product=product, day=day, brand=brand)
 
 
 
-def get_fuel_by_division(state_region_code, product_id=None, day=None, brand=None):
+def get_fuel_by_division(state_region_code, product=None, day=None, brand=None):
     '''
     Request information for a division in the state. 
     Other parameters can optionally supplied
@@ -354,4 +356,4 @@ def get_fuel_by_division(state_region_code, product_id=None, day=None, brand=Non
     '''
 
     zone = 'StateRegion=' + str(state_region_code)
-    return __get_fuel(zone, product_id = product_id, day = day, brand = brand)
+    return __get_fuel(zone, product = product_id, day = day, brand = brand)

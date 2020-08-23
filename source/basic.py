@@ -229,7 +229,7 @@ def display_result():
             "name": "surrounding",
             "default": None,
             "required": False,
-            "supplied_value": None
+            "supplied_value": "no"
         }
 
     ]
@@ -243,9 +243,23 @@ def display_result():
         else:
             print(item["name"], " not supplied")
 
+        """
+        if item["name"] == "surrounding":
+            if item["supplied_value"] == None:
+                item
+        """
+
     if expected_inputs[0]["supplied_value"] is not None:
         requested_suburb = expected_inputs[0]["supplied_value"]
+    else:
+        # FIXME
+        print("It will end in tears")
 
+
+
+
+    query_params = {}
+    [query_params.update({item["name"]: item["supplied_value"]}) for item in expected_inputs]
 
     # Assuming errors
     body_content = f"""<h2>Problem Encountered</h2>
@@ -260,7 +274,7 @@ def display_result():
     breadcrumbs = "Search Results"
     js_params = None
 
-    body_content, js_params = get_suburb_content(requested_suburb)
+    body_content, js_params = get_suburb_content(query_params)
     title = f"{requested_suburb.title()} Fuel Price"
     page_heading = "Fuel Prices"
     breadcrumbs = f"{requested_suburb.title()} Search Results"
@@ -271,7 +285,14 @@ def display_result():
     page_content += DIV_MAIN_OPEN
     page_content += DIV_CONTENT_OPEN
 
+    page_content += "<p>Results for: "
+    for k, v in query_params.items():
+        page_content += k + ": " + v + " "
+
+    page_content += "</p>"
+
     page_content += display.display_form()
+
 
     page_content += body_content
     page_content += DIV_CLOSE
@@ -340,7 +361,10 @@ def get_sorted_data(get_data_function,
         # Creating a new key for price based on the day
 
         filtered_data = get_data_function(**parameters, day=day)
-        # print("\nfiltered data for  ", day, "\n", filtered_data, "\n")
+        '''
+        if __debug__:
+            print("\nfiltered data for  ", day, "\n", filtered_data, "\n")
+        '''
 
         price_day = "price_" + day
 
@@ -377,18 +401,18 @@ def get_region_content(region_id, days=['yesterday', 'today', 'tomorrow']):
         return table_content, items_to_display
 
 
-def get_suburb_content(suburb, days=['yesterday', 'today', 'tomorrow']):
+def get_suburb_content(query_request, days=['yesterday', 'today', 'tomorrow']):
 
     extraction_mapping, items_to_display = get_instructions()
 
     print("\n\n")
     sorted_data = get_sorted_data(fd.get_fuel_by_suburb,
-                                  {"suburb": suburb},
+                                  query_request,
                                   extraction_mapping,
                                   days=days)
 
     if len(sorted_data) == 0:
-        error_text = f"<p>No data for suburb {suburb}</p>"
+        error_text = f"<p>No data for suburb</p>"
         error_text += f"<p>Please check the suburb and try again.</p>"
         return error_text, None
     else:
