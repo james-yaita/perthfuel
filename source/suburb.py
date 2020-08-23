@@ -308,11 +308,3 @@ suburbs= [
     "YOUNGS SIDING",
 ]
 
-
-def is_valid_suburb(supplied_value):
-    if supplied_value.casefold() in \
-        (supplied_value.casefold()  for place in suburbs):
-        return True
-    else:
-        return False
-
