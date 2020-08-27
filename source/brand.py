@@ -30,3 +30,4 @@ brands = [
 
 item_id = "brand_id"
 item_name = "brand_name"
+item_default_id = 0

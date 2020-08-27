@@ -38,7 +38,7 @@ def by_price_today(item):
 
    '''
 
-    return float(item['price_today'])
+    return float(item.get('price_today', 0.0))
 
 
 def by_location(item):
@@ -55,7 +55,7 @@ def by_location(item):
         Returns the location (usually suburb)
 
    '''
-    return item['location']
+    return item.get('location', "")
 
 
 def by_brand(item):
@@ -72,7 +72,7 @@ def by_brand(item):
         Returns the station brand
 
    '''
-    return item['brand']
+    return item.get('brand', "") 
 
 
 # === END Sort Filter Functions ===   
@@ -159,7 +159,7 @@ def add_to_dictionary(stations, fuel_watch_data, primary_key, mapping_keys):
     return None
 
 
-def __get_fuel(zone_info, product=None, day=None, brand=None, surrounding="no"):
+def __get_fuel(zone_info, product=None, day=None, brand=None):
     '''
 
     Gets the information from the Fuel Watch Website based on the
@@ -181,11 +181,13 @@ def __get_fuel(zone_info, product=None, day=None, brand=None, surrounding="no"):
     '''
    
     # Create the request URL
+    # zone_info containing surrounding when a suburb
     feed_url = __fuel_watch_rss_feed__ + zone_info
+
     feed_url += get_field_value_product(product)
     feed_url += get_field_value_brand(brand)
     feed_url += get_field_value_day(day)
-    feed_url += get_field_value_surrounding(surrounding)
+
 
     if __debugging__:
         print(f"Request URL: {feed_url}")
@@ -277,9 +279,13 @@ def get_field_value_surrounding(surrounding=None):
     -------
         String of key value pair for URL query. Or empty sting for None
     '''
-    if surrounding == False or surrounding == "no":
+    if surrounding is None:
+        print("In Surrounding value is: None")
+    else:
+        print("In surrounding value is: ", surrounding)
+    if surrounding == "no":
         return '&Surrounding=no'
-    elif surrounding == True:
+    elif surrounding == "yes":
         return '&Surrounding=yes'
     else:
         return ''
@@ -304,7 +310,7 @@ def get_fuel_by_suburb(suburb, product=None, day=None, surrounding=None, brand=N
     brand: Number.  Number ID for the brand
 
     '''
- 
+
     suburb = suburb.replace(' ', '%20')
     zone = 'Suburb=' + str(suburb) + get_field_value_surrounding(surrounding)
     return __get_fuel(zone, product = product, day = day, brand = brand)

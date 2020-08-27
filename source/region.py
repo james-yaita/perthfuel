@@ -2,7 +2,7 @@
 region_list = [
     {"region_id": 25, "region_name": "Metro : North of River"},
     {"region_id": 26, "region_name": "Metro : South of River"},
-    {"region_id": 27, "region_name": "Metro : East/Hills"},
+    {"region_id": 27, "region_name": "Metro : East &amp; Hills"},
     {"region_id": 15, "region_name": "Albany"},
     {"region_id": 28, "region_name": "Augusta / Margaret River"},
     {"region_id": 30, "region_name": "Bridgetown / Greenbushes"},
@@ -62,3 +62,8 @@ region_list = [
     {"region_id": 59, "region_name": "Wundowie"},
     {"region_id": 56, "region_name": "York"}
 ]
+
+
+item_id = "region_id"
+item_name = "region_name"
+item_default_id = 25

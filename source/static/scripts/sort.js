@@ -156,11 +156,13 @@ function SortData(ele, category_info) {
             
             Make them a neutral state    
         */
- 
         categories.forEach(category_column => {
             if (!category_used_for_sorting.match(category_column.name)) {
-                $(category_column.img_element_id).src = unk_image;
-				$(category_column.img_element_id).alt = unk_alt;
+                if (category_column.img_element_id){
+                    $(category_column.img_element_id).src = unk_image;
+                    $(category_column.img_element_id).alt = unk_alt;                    
+                }
+
             }   
         });
     };  // end updateImages

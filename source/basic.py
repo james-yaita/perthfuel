@@ -2,7 +2,9 @@ import suburb as suburb_info
 import imp
 import fuel_data as fd
 import display
-# import os.path
+
+
+from orchestration import get_instructions
 
 from markupsafe import escape
 from flask import Flask, request
@@ -10,8 +12,10 @@ from flask import Flask, request
 app = Flask(__name__)
 
 imp.reload(suburb_info)
+imp.reload(display)
+imp.reload(fd)
 
-# the last 12 months + 
+# the last 12 months +
 # daily price of a product
 # With Charts
 
@@ -20,138 +24,6 @@ INDEX_PAGE = "index.html"
 DIV_MAIN_OPEN = '<div class="main">'
 DIV_CLOSE = '</div>'
 DIV_CONTENT_OPEN = '<div class="content">'
-
-# Make this a Config to get rid of clutter
-
-orchestration = [
-    {
-        "name": "price_yesterday",
-        "fuelwatch_lookup": None,
-        "data_sort_function": None,
-        "display_in_html": {
-            "col_title": "Yesterday",
-            "col_number": 0,
-            "data_set_key": "price_yesterday",
-            "display_function": display.display_price,
-            "html_sort_function": "sortNumerically",
-            "html_name": "PRICE_YESTERDAY",
-            "direction": "DIR_UNKNOWN",
-            "element_root": "price_yesterday"
-        }
-    },
-    {
-        "name": "price_today",
-        "fuelwatch_lookup": None,
-        "data_sort_function": fd.by_price_today,
-        "display_in_html": {
-            "col_title": "Today",
-            "col_number": 1,
-            "data_set_key": "price_today",
-            "display_function": display.display_price,
-            "html_sort_function": "sortNumerically",
-            "html_name": "PRICE_TODAY",
-            "direction": "DIR_UP",
-            "element_root": "price_today"
-        }
-    }, {
-        "name": "price_tomorrow",
-        "fuelwatch_lookup": None,
-        "data_sort_function": None,
-        "display_in_html": {
-            "col_title": "Tomorrow",
-            "col_number": 2,
-            "data_set_key": "price_tomorrow",
-            "display_function": display.display_price,
-            "html_sort_function": "sortNumerically",
-            "html_name": "PRICE_TOMORROW",
-            "direction": "DIR_UNKNOWN",
-            "element_root": "price_tomorrow"
-        }
-    }, {
-        "name": "trading_name",
-        "fuelwatch_lookup": "trading-name",
-        "data_sort_function": None,
-        "data_display_function": None,
-        "display_in_html": None
-    }, {
-        "name": "brand",
-        "fuelwatch_lookup": "brand",
-        "data_sort_function": None,
-        "display_in_html": {
-            "col_title": "Brand",
-            "col_number": 3,
-            "data_set_key": "brand",
-            "display_function": display.display_as_is,
-            "html_sort_function": "sortAlphabetically",
-            "html_name": "BRAND",
-            "direction": "DIR_UNKNOWN",
-            "element_root": "brand"
-        }
-    }, {
-        "name": "street_address",
-        "fuelwatch_lookup": "address",
-        "data_sort_function": None,
-        "display_in_html": {
-            "col_title": "Address",
-            "col_number": 4,
-            "data_set_key": "street_address",
-            "display_function": display.display_as_is,
-            "html_sort_function": None,
-            "html_name": "STREET_ADDRESS",
-            "direction": "DIR_UNKNOWN",
-            "element_root": "streetAddress"
-        }
-    }, {
-        "name": "locality",
-        "fuelwatch_lookup": "location",
-        "data_sort_function": None,
-        "data_display_function": None,
-        "display_in_html": {
-            "col_title": "Locality",
-            "col_number": 5,
-            "data_set_key": "locality",
-            "display_function": display.display_as_is,
-            "html_sort_function": "sortAlphabetically",
-            "html_name": "LOCALITY",
-            "direction": "DIR_UNKNOWN",
-            "element_root": "locality"
-        }
-    }, {
-        "name": "co-ords",
-        "fuelwatch_lookup": ['latitude', 'longitude'],
-        "data_sort_function": None,
-        "data_display_function": None,
-        "display_in_html": {
-            "col_title": "Co-Ords",
-            "col_number": 6,
-            "data_set_key": "co-ords",
-            "html_display": display.display_co_ords,
-            "html_sort_function": None,
-            "html_name": "LOCALITY",
-            "direction": "DIR_UNKNOWN",
-            "element_root": "locality"
-        }
-    }
-
-]
-
-def get_instructions():
-    fuel_watch_instructions = {}
-    html_display_instruction = []
-
-    for instrument in orchestration:
-
-        # Get instructions for getting data
-        key = instrument.get("name", None)
-        value = instrument.get("fuelwatch_lookup", None)
-        if key is not None and value is not None:
-            fuel_watch_instructions[key] = value
-
-        # Get instruction for displaying in html
-        html_instructions = instrument.get("display_in_html", None)
-        if html_instructions is not None:
-            html_display_instruction .append(html_instructions)
-    return fuel_watch_instructions, html_display_instruction
 
 
 @app.after_request
@@ -167,8 +39,6 @@ def add_header(r):
     return r
 
 
-
-
 @app.route('/')
 @app.route('/index.html')
 def hello_world():
@@ -180,14 +50,21 @@ def hello_world():
     page_content += DIV_MAIN_OPEN
     page_content += DIV_CONTENT_OPEN
 
-    page_content += display.display_form()
+    page_content += display.display_locality_form()
     page_content += '''
-    <ul>
-    <li><a href="region?id=18&name=Mandurah">Mandurah</a></li>
-    <li><a href="region?id=26&name=South%20of%20River">South of River</a></li>
-    <li><a href="region?id=27&name=Hills%20%26%20East Metro">Hills &amp; East Metro</a></li>
-    <li><a href="region?id=25&name=North%20of%20River">North of River</a></li>
-    </ul>
+<ul>
+  <li>
+    <a href="region?id=18&name=Mandurah">Mandurah</a>
+  </li><li>
+    <a href="region?id=26&name=South%20of%20River">South of River</a>
+  </li><li>
+    <a href="region?id=27&name=Hills%20%26%20East Metro">
+      Hills &amp; East Metro
+    </a>
+  </li><li>
+    <a href="region?id=25&name=North%20of%20River">North of River</a>
+  </li>
+</ul>
     '''
 
     page_content += DIV_CLOSE
@@ -197,14 +74,9 @@ def hello_world():
 
     return page_content
 
-# app.route('region/)
 
 
-
-
-
-
-@app.route('/results.html', methods=["POST"])
+@app.route('/locality.html', methods=["GET", "POST"])
 def display_result():
     page_content = ""
     fuel_type = {"id": 1, "name": "Unleaded Petrol"}
@@ -229,55 +101,51 @@ def display_result():
             "name": "surrounding",
             "default": None,
             "required": False,
-            "supplied_value": "no"
+            "supplied_value": None
         }
 
     ]
 
     requested_suburb = ""
+    body_content = f"""
+        <h3 class="error">Problem Encountered</h3>
+
+        <p>Please make sure you enter a suburb or town into the suburb field.</p>
+        """
+    js_params = None
+    page_heading = "Fuel Prices"
+    title = f"Fuel Price"
+    breadcrumbs = f"Search Results"
 
     for item in expected_inputs:
         if item["name"] in request.form:
-            print(item["name"], " has value of ", request.form[item["name"]])
+            print(item["name"], " has value of |", request.form[item["name"]], "|")
             item["supplied_value"] = request.form[item["name"]]
+
         else:
             print(item["name"], " not supplied")
+            if item["name"] == "surrounding":
+                item["supplied_value"] = "no"
+            if item["name"] == "suburb":
+                print(" we should fail")
 
-        """
-        if item["name"] == "surrounding":
-            if item["supplied_value"] == None:
-                item
-        """
-
-    if expected_inputs[0]["supplied_value"] is not None:
-        requested_suburb = expected_inputs[0]["supplied_value"]
-    else:
-        # FIXME
-        print("It will end in tears")
-
-
-
+    suburb_response = expected_inputs[0]["supplied_value"]
 
     query_params = {}
-    [query_params.update({item["name"]: item["supplied_value"]}) for item in expected_inputs]
+    [query_params.update({item["name"]: item["supplied_value"]})
+        for item in expected_inputs]
 
-    # Assuming errors
-    body_content = f"""<h2>Problem Encountered</h2>
-    <p>Currently no data is available for '{requested_suburb}'</p>
-    <p>Please check the supplied suburb. If the suburb exists, 
-    there may not be any data for it as the moment.</p> 
+    if suburb_response is not None and suburb_response != "":
+        requested_suburb = expected_inputs[0]["supplied_value"]
+        body_content, js_params = get_suburb_content(query_params)
+        title = f"{requested_suburb.title()} Fuel Price"
+        breadcrumbs = f"{requested_suburb.title()} Search Results"
+    else:
+        print("It end in tears")
 
-    """
+    
 
-    title = "Fuel Price Search Results"
-    page_heading = "Fuel Prices"
-    breadcrumbs = "Search Results"
-    js_params = None
 
-    body_content, js_params = get_suburb_content(query_params)
-    title = f"{requested_suburb.title()} Fuel Price"
-    page_heading = "Fuel Prices"
-    breadcrumbs = f"{requested_suburb.title()} Search Results"
 
     page_content = display.html_head(title)
     page_content += display.html_body_masthead(page_heading, breadcrumbs)
@@ -287,12 +155,13 @@ def display_result():
 
     page_content += "<p>Results for: "
     for k, v in query_params.items():
+        if v is None:
+            v = "None"
         page_content += k + ": " + v + " "
 
     page_content += "</p>"
 
-    page_content += display.display_form()
-
+    page_content += display.display_locality_form()
 
     page_content += body_content
     page_content += DIV_CLOSE
@@ -316,7 +185,7 @@ def display_region():
     valid_region = True
 
     # Assuming errors
-    body_content = f"""<h2>Problem Encountered</h2>
+    body_content = f"""<h3 class="error">Problem Encountered</h3>
     <p>Currently no data is available for region'</p>
 
 
@@ -340,7 +209,8 @@ def display_region():
     page_content += DIV_MAIN_OPEN
     page_content += DIV_CONTENT_OPEN
 
-    page_content += display.display_form()
+    # FIXME add different forms
+    page_content += display.display_locality_form()
 
     page_content += body_content
     page_content += DIV_CLOSE
@@ -354,7 +224,11 @@ def display_region():
 def get_sorted_data(get_data_function,
                     parameters,
                     extraction_mapping,
-                    days):
+                    days=['yesterday', 'today', 'tomorrow']):
+    '''
+    Get the data and sort it.s
+
+    '''
     stations = {}
     # print("In get_sorted_data ", parameters, " \n\n")
     for day in days:
@@ -393,7 +267,7 @@ def get_region_content(region_id, days=['yesterday', 'today', 'tomorrow']):
 
     if len(sorted_data) == 0:
         error_text = f"<p>No data for the region.</p>"
-        error_text += f"<p>Please check the regsion and try again.</p>"
+        error_text += f"<p>Please check the region and try again.</p>"
         return error_text, None
     else:
         table_content = display.formatted_html_table(sorted_data,
@@ -412,8 +286,12 @@ def get_suburb_content(query_request, days=['yesterday', 'today', 'tomorrow']):
                                   days=days)
 
     if len(sorted_data) == 0:
-        error_text = f"<p>No data for suburb</p>"
-        error_text += f"<p>Please check the suburb and try again.</p>"
+        error_text = f'<h3 class="error">No Data Exists for Suburb</h3>'
+        error_text += f"<p>You may wish to include surrounding suburbs.</p>"
+        error_text += f"""
+        <p>Please check the suburb name.  If it is correct, 
+        then use the surround suburbs option before trying again.</p>
+        """
         return error_text, None
     else:
         table_content = display.formatted_html_table(sorted_data,

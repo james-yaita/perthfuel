@@ -68,12 +68,12 @@ def generate_file(data_set,
         f = open(fn, 'w')
 
         f.write(
-            html_head(page_title) +
-            html_body_masthead(h1_title, breadcrumb) +
-            DIV_MAIN_OPEN +
-            formatted_html_table(data_set, column_info) +
-            DIV_MAIN_CLOSE +
-            html_body_footer() +
+            html_head(page_title),
+            html_body_masthead(h1_title, breadcrumb),
+            DIV_MAIN_OPEN,
+            formatted_html_table(data_set, column_info),
+            DIV_MAIN_CLOSE,
+            html_body_footer(),
             html_tail(column_info)
         )
         f.close()
@@ -84,101 +84,6 @@ def generate_file(data_set,
         print(iso_ex)
 
     return None
-
-
-def generate_index_page(data_set, product_name):
-    """
-      Writes a HTML page utilising the dataset to the supplied location.
-
-      Options exist for change page titles.
-
-      Exceptions
-      ----------
-
-      Throws a general exception when it cannot write to file
-
-
-      Parameters
-      ----------
-
-      data_set: List.
-              Links of page to use
-
-
-      Returns
-      -------
-      None
-
-      """
-
-    try:
-        print(f"Attempting to generate Index HTML file")
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        fn = os.path.join(base_dir, "html", "dynamic", INDEX_PAGE)
-
-        f = open(fn, 'w')
-
-        f.write(html_head("Fuel Watch Prices") +
-                html_body_masthead("Fuel Watch Prices") +
-                DIV_MAIN_OPEN +
-                "<h2>" + product_name + "</h2>" +
-                unordered_list_of_links(data_set) +
-                DIV_MAIN_CLOSE +
-                html_body_footer() +
-                html_tail()
-                )
-        f.close()
-        print(f"File Printed to {fn}")
-
-    except Exception as iso_ex:
-        print("Could not write to file: ", INDEX_PAGE)
-        print(iso_ex)
-
-    return None
-
-
-def unordered_list_of_links(page_details):
-    '''
-    Prints a list of links in an unordered (<ul>) list
-
-        This is done on  the proviso that the supplied list
-        contains dictionary elements with the keys 'filename' and
-        'title'. Otherwise an empty <ul> element is returned
-
-
-        Parameters
-        ----------
-
-        A list of dictionary items.  The dictionary items
-        need to include the keys 'filename' and 'title'
-
-        Example set
-        page_details = [{
-                          "metro_region": 27,
-                          "filename": "hills_html",
-                          "title": "Hills &amp; East Metro"},
-                        {
-                          "metro_region": 25,
-                          "filename": "nor.html",
-                          "title": "North of River"},
-                        {
-                         "metro_region": 26,
-                         "filename": "sor.html",
-                         "title": "South of River"}
-                        ]
-        Return
-
-    '''
-    list_of_links = "<ul>"
-    for link_item in page_details:
-        if 'filename' in link_item and 'title' in link_item:
-            list_of_links += '<li>'
-            list_of_links += '<a href="' + link_item['filename'] + '">'
-            list_of_links += link_item['title'] + " Prices"
-            list_of_links += '</a></li>'
-
-    list_of_links += "</ul>"
-    return list_of_links
 
 
 def formatted_html_table(filtered_data, cols):
@@ -295,22 +200,24 @@ def html_body_masthead(title, breadcrumb=""):
     return masthead
 
 
-def display_form():
+def display_locality_form():
     suburb_combo = suburb_combo_box(suburb.suburbs)
     product_dropdown = create_dropdown(data_list=product.products,
                                        data_option_value_key=product.item_id,
                                        date_option_name_key=product.item_name,
-                                       html_name="product",
-                                       html_id="product")
+                                       html_name="product_dd",
+                                       html_id="product_dd")
     brand_dropdown = create_dropdown(data_list=brand.brands,
                                      data_option_value_key=brand.item_id,
                                      date_option_name_key=brand.item_name,
-                                     html_name="brand",
-                                     html_id="brand")
+                                     html_name="brand_dd",
+                                     html_id="brand_dd")
 
+
+    # Do not duplicate IDs in the form
     surrounding_suburbs_input = f'''
     <input type="checkbox" id="surrounding" name="surrounding"
-     value="surronding" checked="checked">
+     value="yes" checked="checked">
     '''
 
 
@@ -319,10 +226,10 @@ def display_form():
 
     <div class="tabContainer">
 
-    <form method="POST" action="/results.html">
+    <form method="POST" action="/locality.html">
     <label for="suburb">Suburb:</label> {suburb_combo}
     <label for="product">Fuel Type:</label> {product_dropdown}
-    <label for="brand">Brand:</label> {brand_dropdown}
+    <label for="brand_dd">Brand:</label> {brand_dropdown}
     <label for="surround">Include Surrounding Suburbs:</label> {surrounding_suburbs_input}
 
     <input type="submit" value="Search">

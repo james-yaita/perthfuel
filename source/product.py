@@ -12,5 +12,7 @@ products = [
     {"product_id": 10, "fuel_name": "E85"},
     {"product_id": 11, "fuel_name": "Brand diesel"}
 ]
+
 item_id = "product_id"
 item_name = "fuel_name"
+item_default_id = 1
