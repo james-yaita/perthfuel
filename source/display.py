@@ -400,8 +400,13 @@ def cents_to_dollar(price):
 
 
 def display_price(data):
-    price = float(data)
-    return f"{price:.1f}"
+    answer = '-'
+    try:
+      price = float(data)
+      answer = f"{price:.1f}"
+    except:
+      print("data wrong")    
+    return answer
 
 
 def display_co_ords(data):
