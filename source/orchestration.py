@@ -104,7 +104,7 @@ orchestration = [
             "col_title": "Co-Ords",
             "col_number": 6,
             "data_set_key": "co-ords",
-            "html_display": display.display_co_ords,
+            "display_function": display.display_co_ords,
             "html_sort_function": None,
             "html_name": "LOCALITY",
             "direction": "DIR_UNKNOWN",

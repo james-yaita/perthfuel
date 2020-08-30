@@ -57,6 +57,26 @@ def addingWrongStuff():
                           **{price_day: "price"}})
     pprint.pprint(stations, indent=4)
 
+"""
+- When the station closed down yesterday
+- When the station opens tomorrow
+
+- when the price is below 1.00
+
+check google map link works
+
+check sorting
+
+City Beach is a suburb that exists but has no petrol stations
+Brentwood has 1
+Ascot has many
+
+
+
+
+"""
+
+
 
 # If the file is not loaded as a module,
 # call functions

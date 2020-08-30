@@ -1,5 +1,5 @@
-
-brands = [
+# Brand List
+bl = [
     {"brand_id": 0, "brand_name": " -- Show All -- ", "default": True},
     {"brand_id": 29, "brand_name": "7-Eleven"},
     {"brand_id": 3, "brand_name": "Better Choice"},

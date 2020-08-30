@@ -1,6 +1,6 @@
 # Suburbs
 
-suburbs= [
+sl = [
     "ALBANY",
     "ALEXANDER HEIGHTS",
     "ALFRED COVE",
@@ -305,6 +305,5 @@ suburbs= [
     "YANGEBUP",
     "YOKINE",
     "YORK",
-    "YOUNGS SIDING",
+    "YOUNGS SIDING"
 ]
-

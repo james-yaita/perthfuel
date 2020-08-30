@@ -140,11 +140,6 @@ def display_result():
         body_content, js_params = get_suburb_content(query_params)
         title = f"{requested_suburb.title()} Fuel Price"
         breadcrumbs = f"{requested_suburb.title()} Search Results"
-    else:
-        print("It end in tears")
-
-    
-
 
 
     page_content = display.html_head(title)
@@ -153,15 +148,18 @@ def display_result():
     page_content += DIV_MAIN_OPEN
     page_content += DIV_CONTENT_OPEN
 
-    page_content += "<p>Results for: "
+    page_content += "<!-- <p>Results for: "
     for k, v in query_params.items():
         if v is None:
             v = "None"
         page_content += k + ": " + v + " "
 
-    page_content += "</p>"
+    page_content += "</p> -->"
 
-    page_content += display.display_locality_form()
+    page_content += display.display_locality_form(suburb=requested_suburb,
+        selected_product=query_params["product"],
+        selected_brand=query_params["brand"],
+        surrounding=query_params["surrounding"])
 
     page_content += body_content
     page_content += DIV_CLOSE

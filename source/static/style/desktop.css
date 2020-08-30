@@ -81,6 +81,13 @@ h1 {
     color: var(--primary-font);
     border-bottom: solid 5px var(--primary-shadow);
 }
+
+h1 a, h1 a:visited,h1 a:hover, h1 a:active {
+    color: inherit;
+    background-color: inherit;
+    text-decoration: none;
+}
+
 h2 {
     margin:0;
 }

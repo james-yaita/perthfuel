@@ -3,7 +3,7 @@ Type of Fuels
 
 '''
 
-products = [
+pl = [
     {"product_id": 1, "fuel_name": "Unleaded Petrol", "default": True},
     {"product_id": 2, "fuel_name": "Premium Unleaded"},
     {"product_id": 4, "fuel_name": "Diesel"},

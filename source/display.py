@@ -4,12 +4,12 @@ display.py
 Code to generate HTML content
 '''
 import os.path
-import suburb
+import suburb as list_of_suburbs
 import product
 import brand
 import imp
 
-imp.reload(suburb)
+imp.reload(list_of_suburbs)
 imp.reload(product)
 imp.reload(brand)
 
@@ -127,8 +127,8 @@ def formatted_html_table(filtered_data, cols):
             # try and find it in the row
             cell = row.get(col.get('data_set_key', None), '-')
 
-            if 'html_display' in col.keys():
-                cell_func = col.get('html_display')
+            if 'display_function' in col.keys():
+                cell_func = col.get('display_function')
                 tbody += f"<td>{cell_func(cell)}</td>"
             else:
                 tbody += f"<td>{cell}</td>"
@@ -141,7 +141,6 @@ def formatted_html_table(filtered_data, cols):
 
 
 def html_head(title="Fuel Watch"):
-
     '''
     Returns the output for the HEAD section of a HTML page
 
@@ -192,7 +191,7 @@ def html_body_masthead(title, breadcrumb=""):
 <body>
 <a name="top"></a>
 <div id="masthead">
-<h1>{title}</h1>
+<h1><a href="./index.html">{title}</a></h1>
 <div class="breadcrumbs">
 <a href="{INDEX_PAGE}">Home</a> &#x22EE {breadcrumb}</div>
 </div>
@@ -200,29 +199,37 @@ def html_body_masthead(title, breadcrumb=""):
     return masthead
 
 
-def display_locality_form():
-    suburb_combo = suburb_combo_box(suburb.suburbs)
-    product_dropdown = create_dropdown(data_list=product.products,
+def display_locality_form(suburb=None,
+                          selected_product=1,
+                          selected_brand=0,
+                          surrounding="yes"):
+    suburb_combo = suburb_combo_box(list_of_suburbs.sl, suburb_entered=suburb)
+    product_dropdown = create_dropdown(data_list=product.pl,
                                        data_option_value_key=product.item_id,
                                        date_option_name_key=product.item_name,
-                                       html_name="product_dd",
+                                       default_selection=selected_product,
+                                       html_name="product",
                                        html_id="product_dd")
-    brand_dropdown = create_dropdown(data_list=brand.brands,
+    brand_dropdown = create_dropdown(data_list=brand.bl,
                                      data_option_value_key=brand.item_id,
                                      date_option_name_key=brand.item_name,
-                                     html_name="brand_dd",
+                                     default_selection=selected_brand,
+                                     html_name="brand",
                                      html_id="brand_dd")
 
+    # Created the checkbox for surronding suburbs
+    # adn decide if is checked.
+    surrounding_status = ""
+    if surrounding == "yes":
+        surrounding_status = 'checked="checked"'
 
-    # Do not duplicate IDs in the form
     surrounding_suburbs_input = f'''
     <input type="checkbox" id="surrounding" name="surrounding"
-     value="yes" checked="checked">
+     value="yes" {surrounding_status}>
     '''
 
-
     form_info = f'''
-    <h2>Search by Locality or Region</h2>
+    <h2>Search by Locality</h2>
 
     <div class="tabContainer">
 
@@ -245,6 +252,7 @@ def create_dropdown(data_list,
                     date_option_name_key,
                     html_name,
                     html_id,
+                    default_selection=None,
                     css_class=None):
 
     css_class_text = ""
@@ -260,8 +268,11 @@ def create_dropdown(data_list,
     for item in data_list:
         if data_option_value_key in item:
             html_code += f'<option value="{item[data_option_value_key]}"'
-            if "default" in item:
-                html_code += ' selected="selected"'
+
+            if default_selection is not None:
+
+                if str(default_selection) == str(item[data_option_value_key]):
+                    html_code += ' selected="selected"'
             html_code += f'''>
               {item.get(date_option_name_key,"&nbsp;")}</option>\n'''
 
@@ -269,19 +280,25 @@ def create_dropdown(data_list,
     return html_code
 
 
-def suburb_combo_box(suburb_list):
+def suburb_combo_box(suburb_list, suburb_entered=None):
+
+    current_value = ""
+    if suburb_entered is not None:
+        current_value = f'value="{suburb_entered}"'
     '''
     Produce a drop down but editable text
     '''
-    html_text = '''
-    <input type="text" list="suburbs" id="suburb"  name="suburb">
+    html_text = f'''
+    <input type="text" list="suburbs" id="suburb"
+     {current_value} name="suburb">
     <datalist id="suburbs">'''
 
-    for suburb in suburb_list:
-        html_text += f"<option>{suburb}</option>\n"
+    for suburb_name in suburb_list:
+        html_text += f"<option>{suburb_name}</option>\n"
 
     html_text += "</datalist>"
     return html_text
+
 
 def html_body_footer():
     """
