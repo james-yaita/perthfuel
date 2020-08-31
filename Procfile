@@ -1,2 +1,2 @@
 # Procfile
-web: gunicorn source.basic:app
+web: gunicorn basic:app
