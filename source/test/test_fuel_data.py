@@ -37,12 +37,8 @@ def addingWrongStuff():
     filtered_data = fd.get_fuel_by_suburb("Brentwood")
 
     price_day = "price_" + "today"
-    extraction_mapping = {
-
-            "trading_name": "trading-name",
-             "price_today": None
-
-    }
+    extraction_mapping = {"trading_name": "trading-name",
+                          "price_today": None}
     fd.add_to_dictionary(stations,
                          filtered_data,
                          "trading_name",

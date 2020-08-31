@@ -1,1 +1,2 @@
-web: python3 ./source/basic.py
+# Procfile
+web: gunicorn wsgi:app
