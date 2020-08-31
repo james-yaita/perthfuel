@@ -1,4 +1,4 @@
-#import suburb as suburb_info
+import suburb as suburb_info
 import imp
 import fuel_data as fd
 import display
