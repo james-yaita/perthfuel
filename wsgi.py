@@ -1,4 +1,6 @@
 # wsgi.py
-from main import app 
+from source.basic import app
+
+
 if __name__ == "__main__": 
     app.run()
