@@ -114,6 +114,29 @@ orchestration = [
 
 ]
 
+fuel_site_params = {
+    "surrounding": {
+        "default": "yes",
+        "required": False,
+        "supplied_value": None},
+    "suburb": {
+        "default": "",
+        "required": True,
+        "supplied_value": None
+    },
+
+    "brand": {
+        "default": 0,
+        "required": False,
+        "supplied_value": None
+    },
+
+    "product": {
+        "default": 1,
+        "required": False,
+        "supplied_value": None
+    }
+}
 
 def get_instructions():
     fuel_watch_instructions = {}
