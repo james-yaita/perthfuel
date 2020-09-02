@@ -75,6 +75,45 @@ def hello_world():
     return page_content
 
 
+@app.route('/prices.html')
+def display_prices():
+    page_content = ""
+
+    requested_suburb = ""
+    body_content = f"""
+        <h3 class="error">New Tehnique</h3>
+
+        """
+    js_params = None
+    page_heading = "Fuel Prices"
+    title = f"Fuel Price"
+    breadcrumbs = f"Search Results"
+
+    page_content = display.html_head(title)
+    page_content += display.html_body_masthead(page_heading, breadcrumbs)
+
+    page_content += DIV_MAIN_OPEN
+    page_content += DIV_CONTENT_OPEN
+
+    page_content += "<p>Results for: "
+
+
+    page_content += "</p>"
+
+    page_content += display.display_locality_form(suburb="Imaginary",
+        selected_product=1,
+        selected_brand=0,
+        surrounding="yes")
+
+    page_content += body_content
+    page_content += DIV_CLOSE
+    page_content += DIV_CLOSE
+    page_content += display.html_body_footer()
+    # print(js_params)
+    page_content += display.html_tail(js_params)
+
+    return page_content
+
 
 @app.route('/locality.html', methods=["GET", "POST"])
 def display_result():
