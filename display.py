@@ -233,7 +233,7 @@ def display_locality_form(suburb=None,
 
     <div class="tabContainer">
 
-    <form method="POST" action="/locality.html">
+    <form method="GET" action="/prices.html">
     <label for="suburb">Suburb:</label> {suburb_combo}
     <label for="product">Fuel Type:</label> {product_dropdown}
     <label for="brand_dd">Brand:</label> {brand_dropdown}

@@ -5,7 +5,13 @@ import display
 
 
 from orchestration import get_instructions
+from orchestration import suburb_identifier
+from orchestration import brand_identifier
+from orchestration import product_identifier
+from orchestration import surrounding_identifier
 from orchestration import fuel_site_params
+
+
 
 from markupsafe import escape
 from flask import Flask, request
@@ -78,50 +84,56 @@ def hello_world():
 
 @app.route('/prices.html')
 def display_prices():
-    # ?id=<string:region_id>&name=<string:region_desc>
-    supplied_suburb = request.args.get('suburb', "")
-    supplied_product = request.args.get('product', 1)
-    supplied_brand = request.args.get('brand', 0)
-    supplied_surrounding = request.args.get('surrounding',
+    supplied_suburb = request.args.get(suburb_identifier, "")
+    supplied_product = request.args.get(product_identifier, 1)
+    supplied_brand = request.args.get(brand_identifier, 0)
+    supplied_surrounding = request.args.get(surrounding_identifier,
                            fuel_site_params["surrounding"]["default"])
 
     page_content = ""
 
     requested_suburb = ""
     body_content = f"""
-        <h3 class="error">New Tehnique</h3>
+        <h3 class="error">Problem Encountered</h3>
 
+        <p>Please make sure you enter a suburb or town into the suburb field.</p>
         """
     js_params = None
     page_heading = "Fuel Prices"
     title = f"Fuel Price"
     breadcrumbs = f"Search Results"
 
+
+
+    query_params = {
+        suburb_identifier: supplied_suburb,
+        product_identifier: supplied_product,
+        brand_identifier: supplied_brand,
+        surrounding_identifier: supplied_surrounding
+    }
+
+    if supplied_suburb is not None and supplied_suburb != "":
+        body_content, js_params = get_suburb_content(query_params)
+        title = f"{supplied_suburb} Fuel Price"
+        breadcrumbs = f"{supplied_suburb} Search Results"
+    else:
+        supplied_suburb = ""
+
     page_content = display.html_head(title)
     page_content += display.html_body_masthead(page_heading, breadcrumbs)
 
     page_content += DIV_MAIN_OPEN
     page_content += DIV_CONTENT_OPEN
-
-    page_content += f"""<p>Results for: </p>
-    <ul>
-    <li>supplied_suburb = {supplied_suburb}</li>
-    <li>supplied_product = {supplied_product}</li>
-    <li>supplied_brand = {supplied_brand}</li>
-    <li>supplied_surrounding = {supplied_surrounding}</li>
-    </ul>
-    """
-
-    page_content += display.display_locality_form(suburb="Imaginary",
-        selected_product=1,
-        selected_brand=0,
-        surrounding="yes")
-
+    for k, v in query_params.items():
+        page_content += f"<!-- {k} : {v} -->"
+    page_content += display.display_locality_form(suburb=supplied_suburb,
+                        selected_product=supplied_product,
+                        selected_brand=supplied_brand,
+                        surrounding=supplied_surrounding)
     page_content += body_content
     page_content += DIV_CLOSE
     page_content += DIV_CLOSE
     page_content += display.html_body_footer()
-    # print(js_params)
     page_content += display.html_tail(js_params)
 
     return page_content

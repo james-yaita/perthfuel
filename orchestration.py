@@ -113,25 +113,29 @@ orchestration = [
     }
 
 ]
+suburb_identifier = 'suburb'
+product_identifier = 'product'
+brand_identifier = 'brand'
+surrounding_identifier = 'surrounding'
 
 fuel_site_params = {
-    "surrounding": {
+    surrounding_identifier: {
         "default": "yes",
         "required": False,
         "supplied_value": None},
-    "suburb": {
+    product_identifier: {
         "default": "",
         "required": True,
         "supplied_value": None
     },
 
-    "brand": {
+    brand_identifier: {
         "default": 0,
         "required": False,
         "supplied_value": None
     },
 
-    "product": {
+    product_identifier: {
         "default": 1,
         "required": False,
         "supplied_value": None
