@@ -5,6 +5,7 @@ import display
 
 
 from orchestration import get_instructions
+from orchestration import fuel_site_params
 
 from markupsafe import escape
 from flask import Flask, request
@@ -77,6 +78,13 @@ def hello_world():
 
 @app.route('/prices.html')
 def display_prices():
+    # ?id=<string:region_id>&name=<string:region_desc>
+    supplied_suburb = request.args.get('suburb', "")
+    supplied_product = request.args.get('product', 1)
+    supplied_brand = request.args.get('brand', 0)
+    supplied_surrounding = request.args.get('surrounding',
+                           fuel_site_params["surrounding"]["default"])
+
     page_content = ""
 
     requested_suburb = ""
@@ -95,10 +103,14 @@ def display_prices():
     page_content += DIV_MAIN_OPEN
     page_content += DIV_CONTENT_OPEN
 
-    page_content += "<p>Results for: "
-
-
-    page_content += "</p>"
+    page_content += f"""<p>Results for: </p>
+    <ul>
+    <li>supplied_suburb = {supplied_suburb}</li>
+    <li>supplied_product = {supplied_product}</li>
+    <li>supplied_brand = {supplied_brand}</li>
+    <li>supplied_surrounding = {supplied_surrounding}</li>
+    </ul>
+    """
 
     page_content += display.display_locality_form(suburb="Imaginary",
         selected_product=1,
