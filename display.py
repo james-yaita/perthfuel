@@ -231,15 +231,28 @@ def display_locality_form(suburb=None,
     form_info = f'''
     <h2>Search by Locality</h2>
 
-    <div class="tabContainer">
+    <div class="tab_container">
 
     <form method="GET" action="/prices.html">
+    <div class="form_group">
     <label for="suburb">Suburb:</label> {suburb_combo}
-    <label for="product">Fuel Type:</label> {product_dropdown}
-    <label for="brand_dd">Brand:</label> {brand_dropdown}
-    <label for="surround">Include Surrounding Suburbs:</label> {surrounding_suburbs_input}
+    </div>
 
+    <div class="form_group">
+    <label for="surround">Include Surrounding Suburbs:</label> {surrounding_suburbs_input}
+    </div>
+
+    <div class="form_group">
+    <label for="product">Fuel Type:</label> {product_dropdown}
+    </div>
+
+    <div class="form_group">
+    <label for="brand_dd">Brand:</label> {brand_dropdown}
+    </div>
+
+    <div class="form_group">
     <input type="submit" value="Search">
+    </div>
     </form>
     </div>
 

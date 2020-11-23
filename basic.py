@@ -100,9 +100,11 @@ def display_prices():
     }
 
     if supplied_suburb is not None and supplied_suburb != "":
+        supplied_suburb = supplied_suburb.title()
         body_content, js_params = get_suburb_content(query_params)
         title = f"{supplied_suburb} Fuel Price"
         breadcrumbs = f"{supplied_suburb} Search Results"
+
     else:
         supplied_suburb = ""
 
