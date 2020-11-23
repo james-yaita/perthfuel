@@ -11,12 +11,21 @@ sudo apt-get install python3-venv
 python3 -m venv perthfuel
 source bin/activate
 
- https://css-tricks.com/responsive-data-tables/
+
 
 ## Running
 
 ```
+# on Windows 
+set FLASK_ENV=development
+# on Unix
+export FLASK_ENV=development
+
+flask run
 python3 basic.py
 ```
 
-make another change
+
+## Responsive Design
+
+https://css-tricks.com/responsive-data-tables/
