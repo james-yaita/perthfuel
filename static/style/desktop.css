@@ -103,15 +103,30 @@ div.main {
 div.content {
     background-color: var(--quaternary-backgrd-colour);
     color: var(--quaternary-font);
-    margin: 0;
+    margin: 0REM;
     padding: 2REM;
+}
+
+div.tab_container {
+    overflow: auto;
+    display:block;
+    margin-bottom:2REM;
+}
+
+div.form_group {
+    float:left;
+    display:block;
+    margin: 0 1REM 0 0;
+    height:2REM;
+
 }
 
 form {
     background-color: var(quaternary-backgrd-tint-colour);
     margin-top:1REM;
-    margin-bottom: 2REM;
+    padding-bottom:0.75REM;
 }
+
 input, select {
     font-size:1.3REM;
     background-color: var(--quaternary-backgrd-colour);
@@ -159,6 +174,22 @@ tr:nth-child(even) {
 }
 
 
+div.tail {
+    background-color: var(--secondary-backgrd-colour);
+    color: var(--secondary-font);
+    margin:0;
+    padding: 1REM 1REM 3REM 1REM;
+    text-align: center;
+    height: 80%;
+
+}
+
+#footer {
+    margin:0;
+    padding: .2REM 1REM .5REM 2REM;
+    background-color: var(--main-background);
+    color: var(--dark-font);
+}
 
 /* 
 Max width before this PARTICULAR table gets nasty
@@ -176,10 +207,13 @@ only screen and (max-width: 760px),
     
     /* Hide table headers (but not display: none;, for accessibility) */
     thead tr { 
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
+
     }
+    thead td {
+        position: relative;
+        padding-left: 0REM; 
+    }
+
     
     tr { border: 1px solid #ccc; }
     
@@ -188,17 +222,17 @@ only screen and (max-width: 760px),
         border: none;
         border-bottom: 1px solid #eee; 
         position: relative;
-        padding-left: 50%; 
+        padding-left: 12REM; 
     }
     
     td:before { 
         /* Now like a table header */
         position: absolute;
         /* Top/left values mimic padding */
-        top: 6px;
-        left: 6px;
-        width: 25%; 
-        padding-right: 10px; 
+        top: 0.5REM;
+        left: 1REM;
+        width: 10REM; 
+        padding-right: 1REM; 
         white-space: nowrap;
     }
     
@@ -218,20 +252,5 @@ only screen and (max-width: 760px),
 
 
 
-div.tail {
-    background-color: var(--secondary-backgrd-colour);
-    color: var(--secondary-font);
-    margin:0;
-    padding: 1REM 1REM 3REM 1REM;
-    text-align: center;
-    height: 80%;
 
-}
-
-#footer {
-    margin:0;
-    padding: .2REM 1REM .5REM 2REM;
-    background-color: var(--main-background);
-    color: var(--dark-font);
-}
 
