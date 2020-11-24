@@ -48,6 +48,7 @@ body {
     background-color: var(--secondary-backgrd-colour);
     color: var(--secondary-font);
     font-family: tahoma, verdana, sans-serif;
+    font-size: 12px;
     height: 100%;
 }
 
@@ -193,12 +194,14 @@ div.tail {
 
 /* 
 Max width before this PARTICULAR table gets nasty
-This query will take effect for any screen smaller than 760px
+This query will take effect for any screen smaller than 800px
 and also iPads specifically.
 */
 @media 
-only screen and (max-width: 760px),
+only screen and (max-width: 800px),
+(-webkit-device-pixel-ratio : 3),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
+
 
     /* Force table to not be like tables anymore */
     table, thead, tbody, th, td, tr { 
@@ -249,8 +252,16 @@ only screen and (max-width: 760px),
 
 }
 
+@media 
+only screen and
+(-webkit-device-pixel-ratio : 3) {
+body {
 
+    font-family: tahoma, verdana, sans-serif;
+    font-size: 30px;
 
+}
+}
 
 
 
