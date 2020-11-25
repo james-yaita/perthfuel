@@ -163,6 +163,7 @@ def html_head(title="Fuel Watch"):
 <meta charset="utf-8">
 <title>{title}</title>
 <link rel="stylesheet" href="static/style/desktop.css">
+<link rel="stylesheet" href="static/style/mobile.css" media="only screen and (min-device-width: 320px) and (max-device-width: 500px)">
 </head>
     '''
     return head

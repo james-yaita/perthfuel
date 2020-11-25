@@ -45,10 +45,11 @@ More comprehensive options are:
 body {
     padding: 0;
     margin: 0;
+/*     -webkit-text-size-adjust:100%;*/
     background-color: var(--secondary-backgrd-colour);
     color: var(--secondary-font);
     font-family: tahoma, verdana, sans-serif;
-    height: 100%;
+    font-size:30pt;
 }
 
 a,
@@ -116,61 +117,21 @@ div.tab_container {
 div.form_group {
     float:left;
     display:block;
-    margin: 0 1REM 0 0;
-    height:2REM;
-
+    padding:20px;
+    margin: 0 20px;
+    font-size:24pt;
 }
 
 form {
     background-color: var(--quaternary-backgrd-tint-colour);
-    margin-top:1REM;
-    padding-bottom:0.75REM;
 }
 
 input, select {
-    font-size:1.3REM;
+    font-size:2REM
     background-color: var(--quaternary-backgrd-colour);
     color: var(--quaternary-font);
 }
 
-
-
-table {
-    border: solid 1px var(--quaternary-font);
-    border-radius: 5px;
-    padding: 0;
-    border-spacing: 0;
-}
-
-thead,
-tbody {
-    margin: 0;
-    padding: 0;
-}
-
-
-td {
-    padding: 0.4REM;
-    border-bottom: solid 1px var(--candy-stripe-seperator);
-}
-
-th {
-    text-align: left;
-    background-color: var(--primary-backgrd-colour);
-    color: var(--primary-contrast-font);
-    padding: 0.5rem;
-    margin: 0;
-}
-
-tr:nth-child(odd) {
-    background-color: var(--candy-stripe-odd-backgrd-colour);
-    color: var(--candy-stripe-odd-font);
-}
-
-tr:nth-child(even) {
-    background-color: var(--candy-stripe-even-backgrd-colour);
-    color: var(--candy-stripe-even-font);
-}
 
 
 div.tail {
@@ -195,36 +156,58 @@ Max width before this PARTICULAR table gets nasty
 This query will take effect for any screen smaller than 800px
 and also iPads specifically.
 */
-@media 
-only screen and (max-width: 800px),
-(-webkit-device-pixel-ratio : 3),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
+
 
 
     /* Force table to not be like tables anymore */
     table, thead, tbody, th, td, tr { 
         display: block; 
     }
+
+    table {
+    border: solid 1px var(--quaternary-font);
+    border-radius: 5px;
+    padding: 0;
+    border-spacing: 0;
+}
+
+thead,
+tbody {
+    margin: 0;
+    padding: 0;
+}
+
     
     /* Hide table headers (but not display: none;, for accessibility) */
-    thead tr { 
 
-    }
     thead td {
         position: relative;
         padding-left: 0REM; 
+        font-size:30pt;
     }
 
-    
-    tr { border: 1px solid #ccc; }
+    th   {
+        text-align: left;
+    background-color: var(--primary-backgrd-colour);
+    color: var(--primary-contrast-font);
+    padding: 0.5rem;
+    margin: 0;
+    font-size:30pt;
+        }  
+
+    tr { border: 1px solid #ccc; 
+        margin-top: 1REM;
+        margin-bottom: 2REM;}
     
     td { 
         /* Behave  like a "row" */
+        padding: 0.4REM;
+        border-bottom: solid 1px var(--candy-stripe-seperator);
         border: none;
         border-bottom: 1px solid #eee; 
         position: relative;
-        padding-left: 12REM; 
-    }
+        padding-left: 16REM; 
+}
     
     td:before { 
         /* Now like a table header */
@@ -232,7 +215,7 @@ only screen and (max-width: 800px),
         /* Top/left values mimic padding */
         top: 0.5REM;
         left: 1REM;
-        width: 10REM; 
+        width: 15REM; 
         padding-right: 1REM; 
         white-space: nowrap;
     }
@@ -240,7 +223,7 @@ only screen and (max-width: 800px),
     /*
     Label the data
     */
-    td:nth-of-type(1):before { content: "Yesterday"; }
+    td:nth-of-type(1):before { content: "Yesterday";  }
     td:nth-of-type(2):before { content: "Today"; }
     td:nth-of-type(3):before { content: "Tomorrow"; }
     td:nth-of-type(4):before { content: "Brand"; }
@@ -248,18 +231,12 @@ only screen and (max-width: 800px),
     td:nth-of-type(6):before { content: "Locality"; }
     td:nth-of-type(7):before { content: "Co-Ords"; }
 
-}
 
-@media 
-only screen and
-(-webkit-device-pixel-ratio : 3) {
-body {
 
-    font-family: tahoma, verdana, sans-serif;
-    font-size: 30px;
 
-}
-}
+
+
+
 
 
 
