@@ -27,15 +27,8 @@ def by_price_today(item):
     As the price is stored as a text string, it needs
     to be converted to a floating point number.
 
-    Parameters
-    ----------
-    item: dictionary
-        Supplies the station information
-
-    Returns
-    -------
-        The price for today as a floating point number
-
+    :item: dictionary : Supplies the station information
+    :return: price : Today's price as a floating point number
    '''
 
     return float(item.get('price_today', 0.0))

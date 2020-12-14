@@ -262,6 +262,7 @@ def display_region():
     # FIXME add different forms
     page_content += display.display_locality_form()
 
+
     page_content += body_content
     page_content += DIV_CLOSE
     page_content += DIV_CLOSE
