@@ -5,6 +5,7 @@ Code to generate HTML content
 '''
 import os.path
 import os
+import urllib.parse
 
 import suburb as list_of_suburbs
 import region as list_of_regions
@@ -328,19 +329,21 @@ def region_combo_box(region_list, region_entered=None):
 <datalist id="regions">'''
 
     for region in region_list:
-        html_text += f"""<option data-region=\"{region['region_id']}\"
- value=\"{region['region_name']}\"/>"""
+#        html_text += f"""<option data-region=\"{region['region_id']}\"
+# value=\"{region['region_name']}\"/>"""
+       html_text += f"""<option value=\"{urllib.parse.unquote_plus(region['region_name'])}\">
+ {region['region_name']}</option>"""
 
     html_text += "</datalist>"
     return html_text
 
 
-def get_region_content(region_id, days=['yesterday', 'today', 'tomorrow']):
+def get_region_content(query_request, days=['yesterday', 'today', 'tomorrow']):
 
     extraction_mapping, items_to_display = orchestration.get_instructions()
 
     sorted_data = fd.get_sorted_data(fd.get_fuel_by_region,
-                                     {"region": region_id},
+                                     query_request,
                                      extraction_mapping,
                                      days=days)
 

@@ -1,3 +1,4 @@
+import urllib.parse
 
 region_list = [
     {"region_id": 25, "region_name": "Metro : North of River"},
@@ -67,3 +68,26 @@ region_list = [
 item_id = "region_id"
 item_name = "region_name"
 item_default_id = 25
+
+def find_id(searchText):
+    i = 0
+    length = len(region_list)
+    region_ID = None
+    if searchText == None or type(searchText) != str:
+        return region_ID
+
+    print(searchText)
+
+    while (not region_ID and i < length):
+        parsed_text = urllib.parse.unquote_plus(searchText)
+        parsed_text = parsed_text.replace('&', '&amp;')
+
+        if(region_list[i]['region_name'] == parsed_text):
+            region_ID = region_list[i]['region_id']
+        i += 1
+
+
+    return region_ID
+
+
+    

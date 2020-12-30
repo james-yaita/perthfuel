@@ -1,4 +1,5 @@
 import data.suburb as suburb_info
+import data.region as region_info
 import imp
 import fuel_data as fd
 import json
@@ -68,8 +69,19 @@ def home_page():
 def display_region():
     # ?id=<string:region_id>&name=<string:region_desc>
     # TODO sanitise !!!
+
+    region_desc = request.args.get('regions', None)
     region_id = request.args.get('id', None)
-    region_desc = request.args.get('name', None)
+    supplied_product = request.args.get(product_identifier, 1)
+    supplied_brand = request.args.get(brand_identifier, 0)
+
+    if (region_id is None and region_desc is not None):
+        region_id = region_info.find_id(region_desc)
+
+
+    print(region_desc)
+    print(region_id)
+    #TODO add look up region based on id
 
     page_content = ""
 
@@ -83,8 +95,9 @@ def display_region():
     page_heading = "Fuel Prices"
     breadcrumbs = "Search Results"
     js_params = None
-    if region_desc and region_id:
-        body_content, js_params = display.get_region_content(region_id)
+    if region_id:
+        body_content, js_params = display.get_region_content({"region": region_id,
+         "product" : supplied_product, "brand": supplied_brand})
         # TODO escape characters
         title = f"{region_desc} Fuel Price"
         page_heading = "Fuel Prices"
@@ -96,7 +109,9 @@ def display_region():
     page_content += DIV_MAIN_OPEN
     page_content += DIV_CONTENT_OPEN
 
-    page_content += display.display_region_form(region_id)
+    page_content += display.display_region_form(region_desc,
+                        selected_product=supplied_product,
+                        selected_brand=supplied_brand)
 
     page_content += body_content
     page_content += DIV_CLOSE
