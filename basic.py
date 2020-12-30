@@ -2,6 +2,9 @@ import suburb as suburb_info
 import imp
 import fuel_data as fd
 import display
+import json
+
+
 
 
 from orchestration import get_instructions
@@ -126,6 +129,22 @@ def display_prices():
     page_content += display.html_tail(js_params)
 
     return page_content
+
+@app.route('/james.json', methods=["GET"])
+def getAsJson():
+    jsonString = json.dumps(fd.get_fuel_by_suburb(suburb="Brentwood"))
+    collection = []
+
+    for station in jsonString:
+        result = "{\r\n"
+        result += "\t\"title\" :"
+        result += station.title
+        result += "\r\n}"
+        collection.append(result)
+
+    the_answer = " here"   
+    return '\r\n'.join(collection)
+    return the_answer
 
 
 @app.route('/locality.html', methods=["GET", "POST"])

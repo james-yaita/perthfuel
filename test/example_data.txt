@@ -1,0 +1,126 @@
+[{
+	"title": "104.9: 7-Eleven Booragoon",
+	"title_detail": {
+		"type": "text/plain",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "104.9: 7-Eleven Booragoon"
+	},
+	"summary": "Address: 492 Marmion St, BOORAGOON, Phone: (08) 9317 4503",
+	"summary_detail": {
+		"type": "text/html",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "Address: 492 Marmion St, BOORAGOON, Phone: (08) 9317 4503"
+	},
+	"brand": "7-Eleven",
+	"updated": "2020-12-14",
+	"price": "104.9",
+	"trading-name": "7-Eleven Booragoon",
+	"location": "BOORAGOON",
+	"address": "492 Marmion St",
+	"phone": "(08) 9317 4503",
+	"latitude": "-32.039537",
+	"longitude": "115.822893",
+	"site-features": ","
+}, {
+	"title": "105.9: Coles Express Brentwood",
+	"title_detail": {
+		"type": "text/plain",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "105.9: Coles Express Brentwood"
+	},
+	"summary": "Address: 71 Cranford Ave, BRENTWOOD, Phone: (08) 6247 4340",
+	"summary_detail": {
+		"type": "text/html",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "Address: 71 Cranford Ave, BRENTWOOD, Phone: (08) 6247 4340"
+	},
+	"brand": "Coles Express",
+	"updated": "2020-12-14",
+	"price": "105.9",
+	"trading-name": "Coles Express Brentwood",
+	"location": "BRENTWOOD",
+	"address": "71 Cranford Ave",
+	"phone": "(08) 6247 4340",
+	"latitude": "-32.041448",
+	"longitude": "115.848868",
+	"site-features": ","
+}, {
+	"title": "105.9: BP Bull Creek",
+	"title_detail": {
+		"type": "text/plain",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "105.9: BP Bull Creek"
+	},
+	"summary": "Address: 83 Wheatley Dr (Cnr Parry Ave), BULL CREEK, Phone: 08 9332 5843, Open 24 hours",
+	"summary_detail": {
+		"type": "text/html",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "Address: 83 Wheatley Dr (Cnr Parry Ave), BULL CREEK, Phone: 08 9332 5843, Open 24 hours"
+	},
+	"brand": "BP",
+	"updated": "2020-12-14",
+	"price": "105.9",
+	"trading-name": "BP Bull Creek",
+	"location": "BULL CREEK",
+	"address": "83 Wheatley Dr (Cnr Parry Ave)",
+	"phone": "08 9332 5843",
+	"latitude": "-32.057051",
+	"longitude": "115.865845",
+	"site-features": ", Open 24 hours"
+}, {
+	"title": "105.9: Coles Express Bull Creek",
+	"title_detail": {
+		"type": "text/plain",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "105.9: Coles Express Bull Creek"
+	},
+	"summary": "Address: 44 Benningfield Rd (Cnr Leichhardt St), BULL CREEK, Phone: (08) 6247 4344",
+	"summary_detail": {
+		"type": "text/html",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "Address: 44 Benningfield Rd (Cnr Leichhardt St), BULL CREEK, Phone: (08) 6247 4344"
+	},
+	"brand": "Coles Express",
+	"updated": "2020-12-14",
+	"price": "105.9",
+	"trading-name": "Coles Express Bull Creek",
+	"location": "BULL CREEK",
+	"address": "44 Benningfield Rd (Cnr Leichhardt St)",
+	"phone": "(08) 6247 4344",
+	"latitude": "-32.063327",
+	"longitude": "115.857827",
+	"site-features": ","
+}, {
+	"title": "105.9: Coles Express Mount Pleasant",
+	"title_detail": {
+		"type": "text/plain",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "105.9: Coles Express Mount Pleasant"
+	},
+	"summary": "Address: 1 The Esplanade (Cnr Canning Hwy), MT PLEASANT, Phone: (08) 6247 4342",
+	"summary_detail": {
+		"type": "text/html",
+		"language": null,
+		"base": "https://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Suburb=Brentwood",
+		"value": "Address: 1 The Esplanade (Cnr Canning Hwy), MT PLEASANT, Phone: (08) 6247 4342"
+	},
+	"brand": "Coles Express",
+	"updated": "2020-12-14",
+	"price": "105.9",
+	"trading-name": "Coles Express Mount Pleasant",
+	"location": "MT PLEASANT",
+	"address": "1 The Esplanade (Cnr Canning Hwy)",
+	"phone": "(08) 6247 4342",
+	"latitude": "-32.012511",
+	"longitude": "115.850077",
+	"site-features": ","
+}]
