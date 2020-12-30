@@ -25,9 +25,7 @@ imp.reload(suburb_info)
 imp.reload(display)
 imp.reload(fd)
 
-# the last 12 months +
-# daily price of a product
-# With Charts
+
 
 
 INDEX_PAGE = "index.html"
@@ -49,6 +47,8 @@ def hello_world():
 
     page_content += display.display_locality_form()
     page_content += '''
+
+<h3>Unleaded Prices</h3>
 <ul>
   <li>
     <a href="region?id=18&name=Mandurah">Mandurah</a>
@@ -94,7 +94,6 @@ def display_prices():
     breadcrumbs = f"Search Results"
 
 
-
     query_params = {
         suburb_identifier: supplied_suburb,
         product_identifier: supplied_product,
@@ -130,27 +129,10 @@ def display_prices():
 
     return page_content
 
-@app.route('/james.json', methods=["GET"])
-def getAsJson():
-    jsonString = json.dumps(fd.get_fuel_by_suburb(suburb="Brentwood"))
-    collection = []
-
-    for station in jsonString:
-        result = "{\r\n"
-        result += "\t\"title\" :"
-        result += station.title
-        result += "\r\n}"
-        collection.append(result)
-
-    the_answer = " here"   
-    return '\r\n'.join(collection)
-    return the_answer
-
 
 @app.route('/locality.html', methods=["GET", "POST"])
 def display_result():
     page_content = ""
-    fuel_type = {"id": 1, "name": "Unleaded Petrol"}
 
     expected_inputs = [
         {
@@ -174,7 +156,6 @@ def display_result():
             "required": False,
             "supplied_value": None
         }
-
     ]
 
     requested_suburb = ""
@@ -300,15 +281,11 @@ def get_sorted_data(get_data_function,
 
     '''
     stations = {}
-    # print("In get_sorted_data ", parameters, " \n\n")
+
     for day in days:
         # Creating a new key for price based on the day
 
         filtered_data = get_data_function(**parameters, day=day)
-        '''
-        if __debug__:
-            print("\nfiltered data for  ", day, "\n", filtered_data, "\n")
-        '''
 
         price_day = "price_" + day
 

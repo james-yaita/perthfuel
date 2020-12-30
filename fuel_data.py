@@ -72,6 +72,36 @@ def by_brand(item):
 
 
 
+def get_sorted_data(get_data_function,
+                    parameters,
+                    extraction_mapping,
+                    days=['yesterday', 'today', 'tomorrow']):
+    '''
+    Get the data and sort it.s
+
+    '''
+    stations = {}
+
+    for day in days:
+        # Creating a new key for price based on the day
+
+        filtered_data = get_data_function(**parameters, day=day)
+
+        price_day = "price_" + day
+
+        add_to_dictionary(stations,
+                             filtered_data,
+                             "trading_name",
+                             {**extraction_mapping,
+                              **{price_day: "price"}})
+
+    sorted_data = sorted(convert_to_list(stations),
+                         key=by_price_today,
+                         reverse=False)
+
+    return sorted_data
+
+
 def convert_to_list(stations):
     '''
     Converts a dictionary into a list
@@ -169,7 +199,7 @@ def __get_fuel(zone_info, product=None, day=None, brand=None):
     day: String. 
         Today, Tomorrow or Yesterday
 
-    brand: Number. 
+    brand: Number.
         Number ID for the brand.  See Fuel Watch for list.
     '''
    

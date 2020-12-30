@@ -314,6 +314,25 @@ def suburb_combo_box(suburb_list, suburb_entered=None):
     return html_text
 
 
+def region_combo_box(region_list, region_entered=None):
+    current_value = ""
+    if region_entered is not None:
+        current_value = f'value="{region_entered}"'
+    '''
+    Produce a drop down but editable text
+    '''
+    html_text = f'''
+    <input type="text" list="suburbs" id="suburb"
+     {current_value} name="suburb">
+    <datalist id="suburbs">'''
+
+    for region in region_list:
+        html_text += f"<option value=\"{region.region_id}\">{region.region_name}</option>\n"
+
+    html_text += "</datalist>"
+    return html_text
+
+
 def html_body_footer():
     """
   Returns the output for footer of a HTML page.

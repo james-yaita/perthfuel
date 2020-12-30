@@ -27,7 +27,7 @@ def allNumber2():
 
     for previous, current in zip(specimen, specimen[1:]):
         if not assertLessThanEqual(previous['price'],current['price']):
-            result = Flase
+            result = False
 
 
     return result
