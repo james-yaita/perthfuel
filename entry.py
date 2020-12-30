@@ -113,7 +113,17 @@ def display_region():
                         selected_product=supplied_product,
                         selected_brand=supplied_brand)
 
+    extraction_mapping, items_to_display = get_instructions()
+
+    sorted_data = fd.get_sorted_data(fd.get_fuel_by_region,
+                                  {"region": region_id},
+                                  extraction_mapping,
+                                   days=['yesterday', 'today', 'tomorrow'])
     page_content += body_content
+
+    page_content += "<div class+\"different\">"
+    page_content += display.html_div(sorted_data)
+    page_content += "</div>"
     page_content += DIV_CLOSE
     page_content += DIV_CLOSE
     page_content += display.html_body_footer()

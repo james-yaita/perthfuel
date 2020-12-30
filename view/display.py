@@ -25,6 +25,18 @@ DIV_MAIN_OPEN = '<div class="main">'
 DIV_MAIN_CLOSE = '</div>'
 
 
+def html_div(filtered_data):
+    the_content = ""
+    for station in filtered_data:
+        the_content += f"<div class=\"station\" style=\"border: solid 2px #ffcccc;\" id=\"{station['trading_name']}\">"
+
+        for item in station:
+
+            the_content += f"<div class=\"{item}\">{station[item]}</div>"
+        the_content += "</div>"
+    return the_content
+
+
 def formatted_html_table(filtered_data, cols):
     """
 
