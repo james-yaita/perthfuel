@@ -6,13 +6,18 @@ Deployed to https://perthfuel2.herokuapp.com
 
 Still neeed to learn about Heroku
 
-## Installation
 
+## Setup Environment
 sudo apt-get install python3-pip
 sudo apt-get install python3-venv
 
 python3 -m venv perthfuel
 source bin/activate
+
+Install packages
+```
+pip3 install -r requirements.txt
+```
 
 
 ## Running
