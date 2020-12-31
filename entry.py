@@ -1,16 +1,18 @@
 import data.suburb as suburb_info
 import data.region as region_info
 import imp
-import fuel_data as fd
-import json
-import view.display as display
+import data.fuel_data as fd
 
-from orchestration import get_instructions
-from orchestration import suburb_identifier
-from orchestration import brand_identifier
-from orchestration import product_identifier
-from orchestration import surrounding_identifier
-from orchestration import fuel_site_params
+import view.display as display
+import view.requests
+import orchestration
+
+# from orchestration import get_instructions
+# from orchestration import suburb_identifier
+# from orchestration import brand_identifier
+# from orchestration import product_identifier
+# from orchestration import surrounding_identifier
+# from orchestration import fuel_site_params
 
 
 from markupsafe import escape
@@ -67,41 +69,58 @@ def home_page():
 @app.route('/region.html')
 @app.route('/region.htm')
 def display_region():
-    # ?id=<string:region_id>&name=<string:region_desc>
-    # TODO sanitise !!!
+    query_request = view.requests.parse_region_request()
 
-    region_desc = request.args.get('regions', None)
-    region_id = request.args.get('id', None)
-    supplied_product = request.args.get(product_identifier, 1)
-    supplied_brand = request.args.get(brand_identifier, 0)
-
-    if (region_id is None and region_desc is not None):
-        region_id = region_info.find_id(region_desc)
-
-
-    print(region_desc)
-    print(region_id)
-    #TODO add look up region based on id
+    # TODO add look up region based on id
 
     page_content = ""
-
-    # Assuming errors
-    body_content = f"""<h3 class="error">Problem Encountered</h3>
-    <p>Currently no data is available for region</p>
-
-    """
+    alt_content = "<div>Pending</div>"
+    fuel_watch_instructions, html_display_instructions =\
+        orchestration.get_instructions()
 
     title = "Fuel Price Search Results"
     page_heading = "Fuel Prices"
     breadcrumbs = "Search Results"
-    js_params = None
-    if region_id:
-        body_content, js_params = display.get_region_content({"region": region_id,
-         "product" : supplied_product, "brand": supplied_brand})
+
+    if query_request is not None:
+        # query_request = {
+        #     "region": region_id,
+        #    "product": supplied_product,
+        #    "brand": supplied_brand
+        # }
+
+        parameters = {
+            "region": query_request.get('region_id', None),
+            "product": query_request.get('product', 1),
+            "brand": query_request.get('brand', 0)
+        }
+
+        print("parameters are: ", parameters)
         # TODO escape characters
-        title = f"{region_desc} Fuel Price"
+        title = f"{query_request['region_name']} Fuel Price"
         page_heading = "Fuel Prices"
-        breadcrumbs = f"{region_desc}"
+        breadcrumbs = f"{query_request['region_name']}"
+
+        sorted_data = fd.get_sorted_data(
+            fd.get_fuel_by_region,
+            parameters,
+            fuel_watch_instructions)
+
+        if sorted_data is None:
+            body_content = display.get_connection_issue_message("region")
+        elif len(sorted_data) < 1:
+            body_content = display.get_no_data_available("region")
+        else:
+            body_content = display.formatted_html_table(
+                sorted_data,
+                html_display_instructions)
+            alt_content = display.enclose_in_div(
+                display.html_div(sorted_data),
+                element_class="different",
+                element_id="asjson"
+            )
+    else:
+        body_content = display.get_initial_message("region")
 
     page_content = display.html_head(title)
     page_content += display.html_body_masthead(page_heading, breadcrumbs)
@@ -109,28 +128,20 @@ def display_region():
     page_content += DIV_MAIN_OPEN
     page_content += DIV_CONTENT_OPEN
 
-    page_content += display.display_region_form(region_desc,
-                        selected_product=supplied_product,
-                        selected_brand=supplied_brand)
+    page_content += display.display_region_form(query_request)
 
-    extraction_mapping, items_to_display = get_instructions()
-
-    sorted_data = fd.get_sorted_data(fd.get_fuel_by_region,
-                                  {"region": region_id},
-                                  extraction_mapping,
-                                   days=['yesterday', 'today', 'tomorrow'])
     page_content += body_content
+    page_content += alt_content
 
-    page_content += "<div class+\"different\">"
-    page_content += display.html_div(sorted_data)
-    page_content += "</div>"
+    # page_content += "<div class+\"different\">"
+    # page_content += display.html_div(sorted_data)
+    # page_content += "</div>"
     page_content += DIV_CLOSE
     page_content += DIV_CLOSE
     page_content += display.html_body_footer()
-    page_content += display.html_tail(js_params)
+    page_content += display.html_tail(html_display_instructions)
 
-    return page_content    
-
+    return page_content
 
 
 if __name__ == '__main__':

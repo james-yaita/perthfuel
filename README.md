@@ -22,7 +22,7 @@ pip3 install -r requirements.txt
 
 Saving
 ```
-pip3 freeze requirements2.txt
+pip3 freeze > requirements2.txt
 ```
 
 ## Running

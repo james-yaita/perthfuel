@@ -1,5 +1,6 @@
-import display
-import fuel_data as fd
+import view.display as display
+import data.fuel_data as fd
+
 
 orchestration = [
     {
@@ -113,6 +114,8 @@ orchestration = [
     }
 
 ]
+region_identifier = 'regions'
+division_identifier = 'division'
 suburb_identifier = 'suburb'
 product_identifier = 'product'
 brand_identifier = 'brand'
@@ -123,18 +126,27 @@ fuel_site_params = {
         "default": "yes",
         "required": False,
         "supplied_value": None},
-    product_identifier: {
-        "default": "",
-        "required": True,
-        "supplied_value": None
-    },
 
     brand_identifier: {
         "default": 0,
         "required": False,
         "supplied_value": None
     },
-
+    suburb_identifier: {
+        "default": None,
+        "required": False,
+        "supplied_value": None
+    },
+    region_identifier: {
+        "default": None,
+        "required": False,
+        "supplied_value": None
+    },
+        division_identifier: {
+        "default": None,
+        "required": False,
+        "supplied_value": None
+    },
     product_identifier: {
         "default": 1,
         "required": False,

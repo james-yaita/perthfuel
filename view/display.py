@@ -7,13 +7,13 @@ import os.path
 import os
 import urllib.parse
 
-import suburb as list_of_suburbs
-import region as list_of_regions
-import product
-import brand
+import data.suburb as list_of_suburbs
+import data.region as list_of_regions
+import data.product as product
+import data.brand as brand
 import imp
-import orchestration
-import fuel_data as fd
+
+import data.fuel_data as fd
 
 imp.reload(list_of_suburbs)
 imp.reload(product)
@@ -167,9 +167,22 @@ def html_body_masthead(title, breadcrumb=""):
     return masthead
 
 
-def display_region_form(Region=None,
-                        selected_product=1,
-                        selected_brand=0):
+def display_region_form(request=None):
+    Region = None
+    selected_product = 1
+    selected_brand = 0
+
+    if request is not None:
+        Region = request.get('region_name', None)
+        selected_product = request.get('product', 1)
+        selected_brand = request.get('brand', 0)
+
+    print(f"""
+      Regions {Region}
+      product {selected_product}
+      brand {selected_brand}
+
+    """)
 
     region_combo = region_combo_box(list_of_regions.region_list,
                                     region_entered=Region)
@@ -337,7 +350,7 @@ def region_combo_box(region_list, region_entered=None):
     '''
     html_text = f'''
 <input type="text" list="regions" id="region"
-{current_value} name="regions">
+{current_value} name="region_name">
 <datalist id="regions">'''
 
     for region in region_list:
@@ -350,25 +363,34 @@ def region_combo_box(region_list, region_entered=None):
     return html_text
 
 
-def get_region_content(query_request, days=['yesterday', 'today', 'tomorrow']):
-
-    extraction_mapping, items_to_display = orchestration.get_instructions()
-
-    sorted_data = fd.get_sorted_data(fd.get_fuel_by_region,
-                                     query_request,
-                                     extraction_mapping,
-                                     days=days)
-
-    if len(sorted_data) == 0:
-        error_text = f"<p>No data for the region.</p>"
-        error_text += f"<p>Please check the region and try again.</p>"
-        return error_text, None
-    else:
-        table_content = formatted_html_table(sorted_data,
-                                             items_to_display)
-        return table_content, items_to_display
+def get_initial_message(requested_zone):
+    message = f"""
+<p>Use the search options above to find prices for a {requested_zone}.
+    """
+    return message
 
 
+def get_connection_issue_message(requested_zone):
+    message = f"<h3 class=\"error\">Problem Encountered.</h3>"
+    message += f"""
+<p>Currently no data is available
+ for the {requested_zone}.</p>
+
+<p>Please try again later.</p>
+"""
+
+    return message
+
+
+def get_no_data_available(requested_zone):
+    message = f"<p>No data for the requested {requested_zone}.</p>"
+    message += f"<p>Please check the {requested_zone} and try again.</p>"
+
+    return message
+
+
+
+# TODO deprecate
 def get_suburb_content(query_request, days=['yesterday', 'today', 'tomorrow']):
 
     extraction_mapping, items_to_display = get_instructions()
@@ -495,10 +517,11 @@ def cents_to_dollar(price):
 def display_price(data):
     answer = '-'
     try:
-      price = float(data)
-      answer = f"{price:.1f}"
+      if data:
+          price = float(data) 
+          answer = f"{price:.1f}"
     except:
-      print("data wrong")    
+      print("data wrong", "type is ",type(data))    
     return answer
 
 

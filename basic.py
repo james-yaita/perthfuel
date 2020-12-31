@@ -51,15 +51,15 @@ def hello_world():
 <h3>Unleaded Prices</h3>
 <ul>
   <li>
-    <a href="region?id=18&name=Mandurah">Mandurah</a>
+    <a href="region?region_id=18&region_name=Mandurah">Mandurah</a>
   </li><li>
-    <a href="region?id=26&name=South%20of%20River">South of River</a>
+    <a href="region?region_id=26&region_name=South%20of%20River">South of River</a>
   </li><li>
-    <a href="region?id=27&name=Hills%20%26%20East Metro">
+    <a href="region?region_id=27&region_name=Hills%20%26%20East Metro">
       Hills &amp; East Metro
     </a>
   </li><li>
-    <a href="region?id=25&name=North%20of%20River">North of River</a>
+    <a href="region?region_id=25&region_name=North%20of%20River">North of River</a>
   </li>
 </ul>
     '''

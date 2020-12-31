@@ -69,14 +69,13 @@ item_id = "region_id"
 item_name = "region_name"
 item_default_id = 25
 
+
 def find_id(searchText):
     i = 0
     length = len(region_list)
     region_ID = None
-    if searchText == None or type(searchText) != str:
+    if searchText is None or type(searchText) != str:
         return region_ID
-
-    print(searchText)
 
     while (not region_ID and i < length):
         parsed_text = urllib.parse.unquote_plus(searchText)
@@ -86,8 +85,26 @@ def find_id(searchText):
             region_ID = region_list[i]['region_id']
         i += 1
 
-
     return region_ID
 
 
-    
+def find_desc(searchText):
+    region_desc = None
+
+    try:
+        if searchText is None or type(searchText) != str:
+            raise ValueError
+        region_id = int(searchText)
+    except ValueError:
+        return region_desc
+
+    i = 0
+    length = len(region_list)
+
+    while (not region_desc and i < length):
+
+        if(region_list[i]['region_id'] == region_id):
+            region_desc = region_list[i]['region_name']
+        i += 1
+
+    return region_desc
