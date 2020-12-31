@@ -1,23 +1,18 @@
 import data.suburb as suburb_info
-import data.region as region_info
+
 import imp
 import data.fuel_data as fd
+import api.v1.locality as jsuburb
 
 import view.display as display
 import view.requests
 import orchestration
 
-# from orchestration import get_instructions
-# from orchestration import suburb_identifier
-# from orchestration import brand_identifier
-# from orchestration import product_identifier
-# from orchestration import surrounding_identifier
-# from orchestration import fuel_site_params
-
 
 from markupsafe import escape
 from flask import Flask, request
-# from flask import Flask, redirect, url_for, request
+# redirect, url_for, request
+
 app = Flask(__name__)
 
 imp.reload(suburb_info)
@@ -28,6 +23,11 @@ DIV_MAIN_OPEN = '<div class="main">'
 DIV_CLOSE = '</div>'
 DIV_CONTENT_OPEN = '<div class="content">'
 
+
+@app.route('/what')
+def what_teh():
+    print("the text")
+    return None
 
 @app.route('/')
 @app.route('/index.html')
@@ -216,6 +216,15 @@ def display_region():
     page_content += display.html_tail(html_display_instructions)
 
     return page_content
+
+
+
+
+@app.route('/api/v1/locality/<suburb>')
+def api_handling(suburb):
+    print("whats gone wrong?")
+
+    return jsuburb.localityJson(suburb)
 
 
 if __name__ == '__main__':

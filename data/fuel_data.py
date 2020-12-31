@@ -16,7 +16,6 @@ for full details
 __fuel_watch_rss_feed__ = 'http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?'
 
 
-
 # === Sort Filter Functions ===
 
 
@@ -65,11 +64,10 @@ def by_brand(item):
         Returns the station brand
 
    '''
-    return item.get('brand', "") 
+    return item.get('brand', "")
 
 
-# === END Sort Filter Functions ===   
-
+# === END Sort Filter Functions ===
 
 
 def get_sorted_data(get_data_function,
@@ -90,9 +88,9 @@ def get_sorted_data(get_data_function,
         price_day = "price_" + day
 
         add_to_dictionary(stations,
-                             filtered_data,
-                             "trading_name",
-                             {**extraction_mapping,
+                          filtered_data,
+                          "trading_name",
+                          {**extraction_mapping,
                               **{price_day: "price"}})
 
     sorted_data = sorted(convert_to_list(stations),
@@ -154,7 +152,6 @@ def add_to_dictionary(stations, fuel_watch_data, primary_key, mapping_keys):
     if fuel_watch_data is None:
         return
 
-
     for station in fuel_watch_data:
 
         station_info = {}
@@ -175,7 +172,7 @@ def add_to_dictionary(stations, fuel_watch_data, primary_key, mapping_keys):
                         first = False
                     else:
                         station_info[key] = station_info[key] + "," + \
-                                            station.get(component, None)
+                            station.get(component, None)
             else:
                 station_info[key] = station.get(value, None)
 
@@ -190,7 +187,7 @@ def __get_fuel(zone_info, product=None, day=None, brand=None):
 
     Gets the information from the Fuel Watch Website based on the
     supplied parameters
-    
+
     Parameters
     ----------
     zone_info: String.
@@ -205,7 +202,7 @@ def __get_fuel(zone_info, product=None, day=None, brand=None):
     brand: Number.
         Number ID for the brand.  See Fuel Watch for list.
     '''
-   
+
     # Create the request URL
     # zone_info containing surrounding when a suburb
     feed_url = __fuel_watch_rss_feed__ + zone_info
@@ -213,7 +210,6 @@ def __get_fuel(zone_info, product=None, day=None, brand=None):
     feed_url += get_field_value_product(product)
     feed_url += get_field_value_brand(brand)
     feed_url += get_field_value_day(day)
-
 
     # if __debug__:
     print(f"Request URL: {feed_url}")
@@ -223,14 +219,13 @@ def __get_fuel(zone_info, product=None, day=None, brand=None):
     return data['entries']
 
 
-
 def get_field_value_brand(brand=None):
     '''
     Adds brand key value pair ready for input into the URL request.  
 
     Returns an empty string when Brand is none.  Fuel watch then
     assumes all brands have been requested
-    
+
     Parameters
     ----------
         brand: Number.
@@ -241,8 +236,8 @@ def get_field_value_brand(brand=None):
         String of key value pair for URL query. Or empty sting for None
     '''
 
-    if brand == None or brand == 0 or brand =='0':
-        print("removed brand of ", type(brand) )
+    if brand == None or brand == 0 or brand == '0':
+        print("removed brand of ", type(brand))
         return ''
     else:
         return '&Brand=' + str(brand)
@@ -254,7 +249,7 @@ def get_field_value_day(day=None):
 
     Returns an empty string when day is none.  Fuel watch
     will assume today is requested
-    
+
     Parameters
     ----------
         day: String. Default is none and Fuel Watch treats as 
@@ -267,7 +262,7 @@ def get_field_value_day(day=None):
     if day == None:
         return ''
     else:
-        return '&Day=' + day        
+        return '&Day=' + day
 
 
 def get_field_value_product(product=None):
@@ -276,7 +271,7 @@ def get_field_value_product(product=None):
 
     Returns an empty string when product is none.  Fuel watch
     will assume Unleaded is requested
-    
+
     Parameters
     ----------
         product: Number, default is none.  See Fuel Watch for list
@@ -285,7 +280,7 @@ def get_field_value_product(product=None):
     -------
         String of key value pair for URL query. Or empty sting for None
     '''
-    if product  == None:
+    if product == None:
         return ''
     else:
         return '&Product=' + str(product)
@@ -318,7 +313,6 @@ def get_field_value_surrounding(surrounding=None):
         return ''
 
 
-
 def get_fuel_by_suburb(suburb, product=None, day=None, surrounding=None, brand=None):
     '''
     Request information for a suburb.  Other parameters can optionally
@@ -340,8 +334,7 @@ def get_fuel_by_suburb(suburb, product=None, day=None, surrounding=None, brand=N
 
     suburb = suburb.replace(' ', '%20')
     zone = 'Suburb=' + str(suburb) + get_field_value_surrounding(surrounding)
-    return __get_fuel(zone, product = product, day = day, brand = brand)
-
+    return __get_fuel(zone, product=product, day=day, brand=brand)
 
 
 def get_fuel_by_region(region, product=None, day=None, brand=None):
@@ -369,7 +362,6 @@ def get_fuel_by_region(region, product=None, day=None, brand=None):
     return __get_fuel(zone, product=product, day=day, brand=brand)
 
 
-
 def get_fuel_by_division(state_region_code, product=None, day=None, brand=None):
     '''
     Request information for a division in the state. 
@@ -391,4 +383,4 @@ def get_fuel_by_division(state_region_code, product=None, day=None, brand=None):
     '''
 
     zone = 'StateRegion=' + str(state_region_code)
-    return __get_fuel(zone, product = product_id, day = day, brand = brand)
+    return __get_fuel(zone, product=product_id, day=day, brand=brand)

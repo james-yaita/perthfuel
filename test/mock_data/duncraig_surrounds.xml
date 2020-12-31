@@ -1,0 +1,72 @@
+<rss version="2.0">
+<channel>
+<title>FuelWatch Prices For DUNCRAIG</title>
+<ttl>720</ttl>
+<link>https://www.fuelwatch.wa.gov.au</link>
+<description>30/12/2020 - DUNCRAIG</description>
+<language>en-us</language>
+<copyright>Copyright 2005 FuelWatch. All Rights Reserved.</copyright>
+<lastBuildDate>Thu Dec 31 19:09:10 AWST 2020Thu Dec 31 19:09:10 AWST 2020</lastBuildDate>
+<image>
+<url>/fuelwatch/art/fuelwatch-logo.gif</url>
+<title>FuelWatch</title>
+<link>https://www.fuelwatch.wa.gov.au</link>
+</image>
+<item>
+<title>115.9: Coles Express Kingsley</title>
+<description>Address: Cnr Moolanda Bvd & Hepburn Ave, KINGSLEY, Phone: (08) 6157 5650</description>
+<brand>Coles Express</brand>
+<date>2020-12-30</date>
+<price>115.9</price>
+<trading-name>Coles Express Kingsley</trading-name>
+<location>KINGSLEY</location>
+<address>Cnr Moolanda Bvd & Hepburn Ave</address>
+<phone>(08) 6157 5650</phone>
+<latitude>-31.820123</latitude>
+<longitude>115.80602</longitude>
+<site-features>, </site-features>
+</item>
+<item>
+<title>115.9: United Hepburn Heights</title>
+<description>Address: 4 Walter Padbury Bvd (Cnr Hepburn Ave), PADBURY, Phone: (08) 9402 2245</description>
+<brand>United</brand>
+<date>2020-12-30</date>
+<price>115.9</price>
+<trading-name>United Hepburn Heights</trading-name>
+<location>PADBURY</location>
+<address>4 Walter Padbury Bvd (Cnr Hepburn Ave)</address>
+<phone>(08) 9402 2245</phone>
+<latitude>-31.81889</latitude>
+<longitude>115.774096</longitude>
+<site-features>, </site-features>
+</item>
+<item>
+<title>119.9: Coles Express Duncraig</title>
+<description>Address: 193 Warwick Rd (Cnr Glengarry Dr), DUNCRAIG, Phone: (08) 6247 4396</description>
+<brand>Coles Express</brand>
+<date>2020-12-30</date>
+<price>119.9</price>
+<trading-name>Coles Express Duncraig</trading-name>
+<location>DUNCRAIG</location>
+<address>193 Warwick Rd (Cnr Glengarry Dr)</address>
+<phone>(08) 6247 4396</phone>
+<latitude>-31.835583</latitude>
+<longitude>115.782828</longitude>
+<site-features>, </site-features>
+</item>
+<item>
+<title>119.9: Coles Express Warwick (WA)</title>
+<description>Address: 274 Erindale Rd, WARWICK, Phone: (08) 9246 7466</description>
+<brand>Coles Express</brand>
+<date>2020-12-30</date>
+<price>119.9</price>
+<trading-name>Coles Express Warwick (WA)</trading-name>
+<location>WARWICK</location>
+<address>274 Erindale Rd</address>
+<phone>(08) 9246 7466</phone>
+<latitude>-31.844434</latitude>
+<longitude>115.812742</longitude>
+<site-features>, </site-features>
+</item>
+</channel>
+</rss>
