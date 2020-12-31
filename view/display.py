@@ -227,10 +227,29 @@ def display_region_form(request=None):
     return form_info
 
 
-def display_locality_form(suburb=None,
-                          selected_product=1,
-                          selected_brand=0,
-                          surrounding="yes"):
+def display_locality_form(request=None):
+    suburb = None
+    selected_product = 1
+    selected_brand = 0
+    surrounding = "yes"
+
+    if request is not None:
+        suburb = request.get('suburb', None)
+        selected_product = request.get('product', 1)
+        selected_brand = request.get('brand', 0)
+        surrounding = request.get('surrounding', None)
+
+    print(f"""
+      suburb {suburb}
+      surrounding {surrounding}
+      product {selected_product}
+      brand {selected_brand}
+
+    """)
+
+
+
+
     suburb_combo = suburb_combo_box(list_of_suburbs.sl, suburb_entered=suburb)
     product_dropdown = create_dropdown(data_list=product.pl,
                                        data_option_value_key=product.item_id,
@@ -261,7 +280,7 @@ def display_locality_form(suburb=None,
 
     <div class="tab_container">
 
-    <form method="GET" action="/prices.html">
+    <form method="GET" action="/locality.html">
     <div class="form_group">
     <label for="suburb">Suburb:</label> {suburb_combo}
     </div>

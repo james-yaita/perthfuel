@@ -15,8 +15,42 @@ imp.reload(product)
 imp.reload(brand)
 
 
+def parse_locality_request():
+    suburb = orchestration.suburb_identifier
+
+    supplied_suburb = request.args.get(suburb, "")
+
+    surrounding_info = orchestration.surrounding_identifier
+    supplied_surrounding = request.args.get(
+        surrounding_info, "no"
+    )
+
+    product = orchestration.product_identifier
+    supplied_product = request.args.get(
+        product,
+        orchestration.fuel_site_params[product]["default"]
+    )
+
+    brand = orchestration.brand_identifier
+    supplied_brand = request.args.get(
+        brand,
+        orchestration.fuel_site_params[brand]["default"]
+    )
+
+    query_params = {
+        product: supplied_product,
+        brand: supplied_brand,
+        suburb: supplied_suburb,
+        surrounding_info: supplied_surrounding
+    }
+
+    print("Query params are ", query_params)
+
+    return query_params
+
+
 def parse_region_request():
-    print("Is it global?")
+
     region_desc = request.args.get('region_name', None)
     region_id = request.args.get('region_id', None)
 
@@ -33,14 +67,12 @@ def parse_region_request():
     )
 
     request.args.get(orchestration.brand_identifier, 0)
-    print("product is ",supplied_product)
-    print("brand is ", supplied_brand)
 
     if (region_id is None and region_desc is not None):
         region_id = list_of_regions.find_id(region_desc)
     elif (region_id is not None and region_desc is None):
         region_desc = list_of_regions.find_desc(region_id)
-    else:
+    elif (region_id is None and region_desc is None):
         return None
 
     query_params = {
