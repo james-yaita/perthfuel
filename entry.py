@@ -1,6 +1,7 @@
 import data.suburb as suburb_info
 
 import imp
+import json
 import data.fuel_data as fd
 import api.v1.locality as jsuburb
 
@@ -11,6 +12,7 @@ import orchestration
 
 from markupsafe import escape
 from flask import Flask, request
+from flask import Response
 # redirect, url_for, request
 
 app = Flask(__name__)
@@ -23,11 +25,6 @@ DIV_MAIN_OPEN = '<div class="main">'
 DIV_CLOSE = '</div>'
 DIV_CONTENT_OPEN = '<div class="content">'
 
-
-@app.route('/what')
-def what_teh():
-    print("the text")
-    return None
 
 @app.route('/')
 @app.route('/index.html')
@@ -218,11 +215,18 @@ def display_region():
     return page_content
 
 
+@app.route('/api/v2/<suburb>')
+def api_suburb(suburb):
+    print(request.query_string.decode())
+    my_params = {}
+    my_params = my_params * request.args
+
+    return Response(json.dumps(my_params), status=200, mimetype='application/json')
 
 
 @app.route('/api/v1/locality/<suburb>')
-def api_handling(suburb):
-    print("whats gone wrong?")
+def api_locality(suburb):
+    print("In Api")
 
     return jsuburb.localityJson(suburb)
 
