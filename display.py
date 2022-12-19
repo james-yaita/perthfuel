@@ -419,7 +419,8 @@ def display_price(data):
       price = float(data)
       answer = f"{price:.1f}"
     except:
-      print("data wrong")    
+      answer = '&nbsp;'
+
     return answer
 
 

@@ -341,6 +341,7 @@ def get_suburb_content(query_request, days=['yesterday', 'today', 'tomorrow']):
         error_text += f"""
         <p>Please check the suburb name.  If it is correct, 
         then use the surround suburbs option before trying again.</p>
+        <p>Surronding suburb option only works for adjacent suburbs.</p>
         """
         return error_text, None
     else:

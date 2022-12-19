@@ -3,14 +3,11 @@ import feedparser
 
 # Fuel Data
 '''
-
 Code to extract information from the Fuel Watch RSS feed
 
 See:
 https://www.fuelwatch.wa.gov.au/fuelwatch/pages/public/contentholder.jspx?key=fuelwatchRSS.html
 for full details
-
-
 
 '''
 __fuel_watch_rss_feed__ = 'http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?'
@@ -35,7 +32,6 @@ def by_price_today(item):
     Returns
     -------
         The price for today as a floating point number
-
    '''
 
     return float(item.get('price_today', 0.0))
@@ -161,7 +157,6 @@ def add_to_dictionary(stations, fuel_watch_data, primary_key, mapping_keys):
 
 def __get_fuel(zone_info, product=None, day=None, brand=None):
     '''
-
     Gets the information from the Fuel Watch Website based on the
     supplied parameters
     
@@ -300,15 +295,10 @@ def get_fuel_by_suburb(suburb, product=None, day=None, surrounding=None, brand=N
     Parameters
     ----------
     suburb: String.  Suburb to lookup
-
     product_id: Number. Fuel type
-
     day: String. Today, Tomorrow or Yesterday
-
     surrounding: Boolean. Include surrounding suburbs.  
-
     brand: Number.  Number ID for the brand
-
     '''
 
     suburb = suburb.replace(' ', '%20')
@@ -325,11 +315,8 @@ def get_fuel_by_region(region, product=None, day=None, brand=None):
     Parameters
     ----------
     regions: Number.  Region to lookup
-
     product_id: Number. Fuel type
-
     day: String. Today, Tomorrow or Yesterday
-
     brand: Number.  Number ID for the brand
 
     Returns
@@ -349,11 +336,8 @@ def get_fuel_by_division(state_region_code, product=None, day=None, brand=None):
     Parameters
     ----------
     state_region_code: Number.  Division to lookup
-
     product_id: Number. Fuel type
-
     day: String. Today, Tomorrow or Yesterday
-
     brand: Number.  Number ID for the brand
 
     Returns

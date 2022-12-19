@@ -1,6 +1,5 @@
 '''
 Type of Fuels
-
 '''
 
 pl = [
